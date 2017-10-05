@@ -23,4 +23,4 @@ Create new games and developers and define relations between them.
 # Data storage
 
 - SQLite as relational database
-- XML
+- JSON
