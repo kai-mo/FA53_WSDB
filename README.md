@@ -3,7 +3,7 @@ We are the bes.t
 
 # Group number
 
-TBA
+\# 7
 
 # Team
 
