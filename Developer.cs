@@ -27,7 +27,7 @@
         set { this.name = value; }
     }
 
-    public Game[] games
+    public Game[] Games
     {
         get { return this.games; }
         set { this.games = value; }
