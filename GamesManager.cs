@@ -1,16 +1,26 @@
 ﻿using System;
+using System.Windows.Forms;
 
 public class GamesManager
 {
     public static void Main(string[] args)
     {
-        if (args.Length == 0 || !args[0].ToLower().Equals("tui"))
+        if (args.Length == 0)
         {
-            Console.WriteLine("Please enter a valid option [tui]!");
+            ShowViewError();
+            return;
         }
-        else
+
+        switch (args[0].ToLower())
         {
-            new TUI();
+            case "tui": new TUI(); break;
+            case "gui": Application.Run(new GUI()); break;
+            default: ShowViewError(); return;
         }
+    }
+
+    private static void ShowViewError()
+    {
+        Console.WriteLine("Please enter a valid view option [tui|gui]!");
     }
 }
