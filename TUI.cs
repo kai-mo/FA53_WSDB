@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 ﻿public class TUI
 {
@@ -34,8 +35,29 @@ Choose an option: ");
 		string choice = Console.ReadLine();
 
 		switch( choice ){
+            case "a": ShowAllGames(); break;
 			case "q": return;
 			default : ShowMenu(); break;
 		}
 	}
+
+    private void ShowAllGames()
+    {
+        Console.Clear();
+
+        List<String> games = new List<string>();
+        games.Add("CS:GO");
+        games.Add("The Witcher 3");
+        games.Add("Grand Theft Auto V");
+
+        foreach(String game in games)
+        {
+            Console.WriteLine("- " + game);
+        }
+
+        Console.WriteLine("\nPress any key to return to menu...");
+        Console.ReadKey();
+
+        ShowMenu();
+    }
 }
