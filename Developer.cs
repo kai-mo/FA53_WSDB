@@ -4,11 +4,11 @@
     private string name;
     private Game[] games;
 
-	public Developer(int id, string name)
-	{
+    public Developer(int id, string name)
+    {
         this.id = id;
         this.name = name;
-	}
+    }
 
     public Developer(string name)
     {

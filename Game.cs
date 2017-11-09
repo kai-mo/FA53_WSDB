@@ -5,11 +5,11 @@
     private Developer developer;
 
     public Game(int id, string name, Developer developer)
-	{
+    {
         this.id = id;
         this.name = name;
         this.developer = developer;
-	}
+    }
 
     public Game(int id, string name)
     {
