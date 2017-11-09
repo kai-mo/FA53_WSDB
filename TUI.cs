@@ -50,6 +50,7 @@ Choose an option: ");
 
 		switch( choice ){
             case "a": ShowAllGames(); break;
+            case "b": AddGame(); break;
             case "e": ShowAllDevelopers(); break;
 			case "q": return;
 			default : ShowMenu(); break;
@@ -82,6 +83,25 @@ Choose an option: ");
 
         Console.WriteLine("\nPress any key to return to menu...");
         Console.ReadKey();
+
+        ShowMenu();
+    }
+
+    private void AddGame()
+    {
+        string new_game;
+
+        do
+        {
+            Console.Clear();
+            Console.Write("Enter name of new game or q to abort: ");
+            new_game = Console.ReadLine();
+        } while (new_game.Equals(""));
+
+        if (!new_game.Equals("q"))
+        {
+            games.Add(new_game);
+        }
 
         ShowMenu();
     }
