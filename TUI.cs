@@ -3,9 +3,23 @@ using System.Collections.Generic;
 
 ﻿public class TUI
 {
-	public TUI()
+
+    private List<String> games;
+    private List<String> developers;
+
+    public TUI()
 	{
-		ShowMenu();
+        games = new List<string>();
+        games.Add("CS:GO");
+        games.Add("The Witcher 3");
+        games.Add("Grand Theft Auto V");
+
+        developers = new List<string>();
+        developers.Add("Valve");
+        developers.Add("Ubisoft");
+        developers.Add("Rockstar Games");
+
+        ShowMenu();
 	}
 
 	private void ShowMenu()
@@ -46,11 +60,6 @@ Choose an option: ");
     {
         Console.Clear();
 
-        List<String> games = new List<string>();
-        games.Add("CS:GO");
-        games.Add("The Witcher 3");
-        games.Add("Grand Theft Auto V");
-
         foreach(String game in games)
         {
             Console.WriteLine("- " + game);
@@ -65,11 +74,6 @@ Choose an option: ");
     private void ShowAllDevelopers()
     {
         Console.Clear();
-
-        List<String> developers = new List<string>();
-        developers.Add("Valve");
-        developers.Add("Ubisoft");
-        developers.Add("Rockstar Games");
 
         foreach (String developer in developers)
         {
