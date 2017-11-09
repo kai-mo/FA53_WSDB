@@ -1,18 +1,21 @@
-﻿interface IDataAccess
+﻿using System;
+using System.Collections.Generic;
+
+public interface IDataAccess
 {
-    void add(Game game);
+    void addGame(string name);
 
-    void add(Developer developer);
+    void addDeveloper(string name);
 
-    void edit(Game game);
+    void editGame(Game game);
 
-    void edit(Developer developer);
+    void editDeveloper(Developer developer);
 
-    void delete(Game game);
+    void deleteGame(int id);
 
-    void delete(Developer developer);
+    void deleteDeveloper(int id);
 
-    Game[] getGames();
+    List<Game> getGames();
 
-    Developer[] getDevelopers();
+    List<Developer> getDevelopers();
 }
