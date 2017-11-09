@@ -36,6 +36,7 @@ Choose an option: ");
 
 		switch( choice ){
             case "a": ShowAllGames(); break;
+            case "e": ShowAllDevelopers(); break;
 			case "q": return;
 			default : ShowMenu(); break;
 		}
@@ -53,6 +54,26 @@ Choose an option: ");
         foreach(String game in games)
         {
             Console.WriteLine("- " + game);
+        }
+
+        Console.WriteLine("\nPress any key to return to menu...");
+        Console.ReadKey();
+
+        ShowMenu();
+    }
+
+    private void ShowAllDevelopers()
+    {
+        Console.Clear();
+
+        List<String> developers = new List<string>();
+        developers.Add("Valve");
+        developers.Add("Ubisoft");
+        developers.Add("Rockstar Games");
+
+        foreach (String developer in developers)
+        {
+            Console.WriteLine("- " + developer);
         }
 
         Console.WriteLine("\nPress any key to return to menu...");
