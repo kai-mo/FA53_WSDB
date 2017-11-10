@@ -46,6 +46,7 @@ Choose an option: ");
 			case "f": AddDeveloper(); break;
 			case "g": EditDeveloper(); break;
 			case "h": DeleteDeveloper(); break;
+			case "i": ShowAssignments(); break;
 			case "q": return;
 			default : ShowMenu(); break;
 		}
@@ -217,6 +218,34 @@ Choose an option: ");
 		} while(index >= games.Count || index < 0);
 		
 		businesslayer.deleteGame(games[index].ID);
+		
+		ShowMenu();
+	}
+	
+	private void ShowAssignments()
+	{
+		List<Game> games = businesslayer.getGames();
+		List<Developer> developers = businesslayer.getDevelopers();
+	
+		Console.Clear();
+	
+		foreach(Developer developer in developers)
+		{
+			Console.WriteLine(developer.Name + ":");
+			
+			foreach(Game game in games)
+			{
+				if(game.Developer.ID == developer.ID)
+				{
+					Console.WriteLine("\t" + game.Name);
+				}
+			}
+			
+			Console.WriteLine();
+		}
+		
+		Console.WriteLine("\nPress any key to return to menu...");
+        Console.ReadKey();
 		
 		ShowMenu();
 	}
