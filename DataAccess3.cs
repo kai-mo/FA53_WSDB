@@ -58,7 +58,16 @@ public class DataAccess3 : IDataAccess
 	}
 
     public void deleteGame(int id)
-    { }
+    { 
+		foreach(Game game in games)
+		{
+			if(game.ID == id)
+			{
+				games.RemoveAt(games.IndexOf(game));
+				break;
+			}
+		}
+	}
 
     public void deleteDeveloper(int id)
     { 
