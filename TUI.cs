@@ -41,6 +41,7 @@ Choose an option: ");
             case "a": ShowAllGames(); break;
             case "b": AddGame(); break;
 			case "c": EditGame(); break;
+			case "d": DeleteGame(); break;
             case "e": ShowAllDevelopers(); break;
 			case "f": AddDeveloper(); break;
 			case "g": EditDeveloper(); break;
@@ -193,6 +194,29 @@ Choose an option: ");
 		} while(index >= developers.Count || index < 0);
 		
 		businesslayer.deleteDeveloper(developers[index].ID);
+		
+		ShowMenu();
+	}
+	
+	private void DeleteGame()
+	{
+		List<Game> games = businesslayer.getGames();
+		int index;
+		
+		Console.Clear();
+		
+		for(int i = 1; i <= games.Count; i++)
+		{
+			Console.WriteLine(i.ToString() + ". " + games[i - 1].Name);
+		}
+		
+		do
+		{
+			Console.Write("\nChoose number of game: ");
+			index = Int32.Parse(Console.ReadLine()) - 1;
+		} while(index >= games.Count || index < 0);
+		
+		businesslayer.deleteGame(games[index].ID);
 		
 		ShowMenu();
 	}
