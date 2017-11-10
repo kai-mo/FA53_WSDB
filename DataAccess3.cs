@@ -61,7 +61,16 @@ public class DataAccess3 : IDataAccess
     { }
 
     public void deleteDeveloper(int id)
-    { }
+    { 
+		foreach(Developer developer in developers)
+		{
+			if(developer.ID == id)
+			{
+				developers.RemoveAt(developers.IndexOf(developer));
+				break;
+			}
+		}
+	}
 
     public List<Game> getGames()
     {
