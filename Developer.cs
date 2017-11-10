@@ -2,7 +2,6 @@
 {
     private int id;
     private string name;
-    private Game[] games;
 
     public Developer(int id, string name)
     {
@@ -25,11 +24,5 @@
     {
         get { return this.name; }
         set { this.name = value; }
-    }
-
-    public Game[] Games
-    {
-        get { return this.games; }
-        set { this.games = value; }
     }
 }
