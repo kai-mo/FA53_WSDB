@@ -46,7 +46,16 @@ public class DataAccess3 : IDataAccess
 	}
 
     public void editDeveloper(Developer developer)
-    { }
+    { 	
+		foreach(Developer developer_ in developers)
+		{
+			if(developer_.ID == developer.ID) 
+			{
+				developers[developers.IndexOf(developer_)].Name = developer.Name;
+				break;
+			}
+		}
+	}
 
     public void deleteGame(int id)
     { }

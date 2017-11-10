@@ -43,6 +43,7 @@ Choose an option: ");
 			case "c": EditGame(); break;
             case "e": ShowAllDevelopers(); break;
 			case "f": AddDeveloper(); break;
+			case "g": EditDeveloper(); break;
 			case "q": return;
 			default : ShowMenu(); break;
 		}
@@ -140,6 +141,34 @@ Choose an option: ");
 		new_name = Console.ReadLine();
 		
 		businesslayer.editGame(games[index].ID, new_name);
+		
+		ShowMenu();
+	}
+	
+	private void EditDeveloper()
+	{
+		List<Developer> developers = businesslayer.getDevelopers();
+		int index;
+		string new_name;
+		
+		Console.Clear();
+		
+		for(int i = 1; i <= developers.Count; i++)
+		{
+			Console.WriteLine(i.ToString() + ". " + developers[i - 1].Name);
+		}
+		
+		do
+		{
+			Console.Write("\nChoose number of developer: ");
+			index = Int32.Parse(Console.ReadLine()) - 1;
+		} while(index >= developers.Count || index < 0);
+		
+		
+		Console.Write("Enter new name for '" + developers[index].Name + "': ");
+		new_name = Console.ReadLine();
+		
+		businesslayer.editDeveloper(developers[index].ID, new_name);
 		
 		ShowMenu();
 	}
