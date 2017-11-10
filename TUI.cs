@@ -90,7 +90,7 @@ Choose an option: ");
 
         if (!new_game.Equals("q"))
         {
-            // TODO: implement addGame() in dataAccess
+            businesslayer.addGame(new_game);
         }
 
         ShowMenu();

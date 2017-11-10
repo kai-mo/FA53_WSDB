@@ -3,8 +3,22 @@ using System.Collections.Generic;
 
 public class DataAccess3 : IDataAccess
 {
+	private List<Game> games;
+	
+	public DataAccess3()
+	{
+		games = new List<Game>();
+        games.Add(new Game("EGameFive"));
+        games.Add(new Game("AGameOne"));
+        games.Add(new Game("BGameTwo"));
+        games.Add(new Game("DGameFour"));
+        games.Add(new Game("CGameThree"));
+	}
+
     public void addGame(string name)
-    { }
+    { 
+		games.Add(new Game(name));
+	}
 
     public void addDeveloper(string name)
     { }
@@ -23,12 +37,6 @@ public class DataAccess3 : IDataAccess
 
     public List<Game> getGames()
     {
-        List<Game> games = new List<Game>();
-        games.Add(new Game("EGameFive"));
-        games.Add(new Game("AGameOne"));
-        games.Add(new Game("BGameTwo"));
-        games.Add(new Game("DGameFour"));
-        games.Add(new Game("CGameThree"));
         return games;
     }
 
