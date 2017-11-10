@@ -3,22 +3,11 @@ using System.Collections.Generic;
 
 ﻿public class TUI
 {
-
-    private List<String> games;
-    private List<String> developers;
-
-    public TUI()
+	private IBusinessLayer businesslayer;
+	
+    public TUI(IBusinessLayer businesslayer)
 	{
-        games = new List<string>();
-        games.Add("CS:GO");
-        games.Add("The Witcher 3");
-        games.Add("Grand Theft Auto V");
-
-        developers = new List<string>();
-        developers.Add("Valve");
-        developers.Add("Ubisoft");
-        developers.Add("Rockstar Games");
-
+		this.businesslayer = businesslayer;
         ShowMenu();
 	}
 
@@ -62,9 +51,9 @@ Choose an option: ");
     {
         Console.Clear();
 
-        foreach(String game in games)
+        foreach(Game game in businesslayer.getGames())
         {
-            Console.WriteLine("- " + game);
+            Console.WriteLine("- " + game.Name);
         }
 
         Console.WriteLine("\nPress any key to return to menu...");
@@ -77,9 +66,9 @@ Choose an option: ");
     {
         Console.Clear();
 
-        foreach (String developer in developers)
+        foreach (Developer developer in businesslayer.getDevelopers())
         {
-            Console.WriteLine("- " + developer);
+            Console.WriteLine("- " + developer.Name);
         }
 
         Console.WriteLine("\nPress any key to return to menu...");
@@ -101,7 +90,7 @@ Choose an option: ");
 
         if (!new_game.Equals("q"))
         {
-            games.Add(new_game);
+            // TODO: implement addGame() in dataAccess
         }
 
         ShowMenu();
@@ -120,7 +109,7 @@ Choose an option: ");
 
         if (!new_developer.Equals("q"))
         {
-            developers.Add(new_developer);
+            // TODO: implement addDeveloper() in dataAccess
         }
 
         ShowMenu();

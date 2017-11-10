@@ -13,7 +13,7 @@ public class GamesManager
 
         switch (args[0].ToLower())
         {
-            case "tui": new TUI(); break;
+            case "tui": new TUI(new BusinessLayer1(new DataAccess3())); break;
             case "gui": Application.Run(new GUI()); break;
             default: ShowViewError(); return;
         }
