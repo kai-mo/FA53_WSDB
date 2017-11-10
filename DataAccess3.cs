@@ -9,18 +9,18 @@ public class DataAccess3 : IDataAccess
 	public DataAccess3()
 	{
 		games = new List<Game>();
-        games.Add(new Game("EGameFive"));
-        games.Add(new Game("AGameOne"));
-        games.Add(new Game("BGameTwo"));
-        games.Add(new Game("DGameFour"));
-        games.Add(new Game("CGameThree"));
+        games.Add(new Game(1, "EGameFive"));
+        games.Add(new Game(2, "AGameOne"));
+        games.Add(new Game(3, "BGameTwo"));
+        games.Add(new Game(4, "DGameFour"));
+        games.Add(new Game(5, "CGameThree"));
 		
 		developers = new List<Developer>();
-        developers.Add(new Developer("EDeveloperOne"));
-        developers.Add(new Developer("ADeveloperTwo"));
-        developers.Add(new Developer("BDeveloperThree"));
-        developers.Add(new Developer("DDeveloperFour"));
-        developers.Add(new Developer("CDeveloperFive"));
+        developers.Add(new Developer(1, "EDeveloperOne"));
+        developers.Add(new Developer(2, "ADeveloperTwo"));
+        developers.Add(new Developer(3, "BDeveloperThree"));
+        developers.Add(new Developer(4, "DDeveloperFour"));
+        developers.Add(new Developer(5, "CDeveloperFive"));
 	}
 
     public void addGame(string name)
