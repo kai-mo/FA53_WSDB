@@ -24,7 +24,7 @@ public class DataAccess3 : IDataAccess
 	}
 
     public void addGame(string name)
-    { 
+    { 	
 		games.Add(new Game(name));
 	}
 
@@ -34,7 +34,16 @@ public class DataAccess3 : IDataAccess
 	}
 
     public void editGame(Game game)
-    { }
+    { 
+		foreach(Game game_ in games)
+		{
+			if(game_.ID == game.ID) 
+			{
+				games[games.IndexOf(game_)].Name = game.Name;
+				break;
+			}
+		}
+	}
 
     public void editDeveloper(Developer developer)
     { }
