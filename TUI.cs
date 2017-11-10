@@ -52,6 +52,7 @@ Choose an option: ");
             case "a": ShowAllGames(); break;
             case "b": AddGame(); break;
             case "e": ShowAllDevelopers(); break;
+			case "f": AddDeveloper(); break;
 			case "q": return;
 			default : ShowMenu(); break;
 		}
@@ -105,4 +106,23 @@ Choose an option: ");
 
         ShowMenu();
     }
+	
+	private void AddDeveloper()
+	{
+		string new_developer;
+		
+        do
+        {
+            Console.Clear();
+            Console.Write("Enter name of new developer or q to abort: ");
+            new_developer = Console.ReadLine();
+        } while (new_developer.Equals(""));
+
+        if (!new_developer.Equals("q"))
+        {
+            developers.Add(new_developer);
+        }
+
+        ShowMenu();
+	}
 }
