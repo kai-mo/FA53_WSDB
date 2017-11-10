@@ -109,7 +109,7 @@ Choose an option: ");
 
         if (!new_developer.Equals("q"))
         {
-            // TODO: implement addDeveloper() in dataAccess
+            businesslayer.addDeveloper(new_developer);
         }
 
         ShowMenu();

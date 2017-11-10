@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class DataAccess3 : IDataAccess
 {
 	private List<Game> games;
+	private List<Developer> developers;
 	
 	public DataAccess3()
 	{
@@ -13,6 +14,13 @@ public class DataAccess3 : IDataAccess
         games.Add(new Game("BGameTwo"));
         games.Add(new Game("DGameFour"));
         games.Add(new Game("CGameThree"));
+		
+		developers = new List<Developer>();
+        developers.Add(new Developer("EDeveloperOne"));
+        developers.Add(new Developer("ADeveloperTwo"));
+        developers.Add(new Developer("BDeveloperThree"));
+        developers.Add(new Developer("DDeveloperFour"));
+        developers.Add(new Developer("CDeveloperFive"));
 	}
 
     public void addGame(string name)
@@ -21,7 +29,9 @@ public class DataAccess3 : IDataAccess
 	}
 
     public void addDeveloper(string name)
-    { }
+    { 
+		developers.Add(new Developer(name));
+	}
 
     public void editGame(Game game)
     { }
@@ -42,12 +52,6 @@ public class DataAccess3 : IDataAccess
 
     public List<Developer> getDevelopers()
     {
-        List<Developer> developers = new List<Developer>();
-        developers.Add(new Developer("EDeveloperOne"));
-        developers.Add(new Developer("ADeveloperTwo"));
-        developers.Add(new Developer("BDeveloperThree"));
-        developers.Add(new Developer("DDeveloperFour"));
-        developers.Add(new Developer("CDeveloperFive"));
         return developers;
     }
 }
