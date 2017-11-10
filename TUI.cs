@@ -40,6 +40,7 @@ Choose an option: ");
 		switch( choice ){
             case "a": ShowAllGames(); break;
             case "b": AddGame(); break;
+			case "c": EditGame(); break;
             case "e": ShowAllDevelopers(); break;
 			case "f": AddDeveloper(); break;
 			case "q": return;
@@ -113,5 +114,33 @@ Choose an option: ");
         }
 
         ShowMenu();
+	}
+	
+	private void EditGame()
+	{
+		List<Game> games = businesslayer.getGames();
+		int index;
+		string new_name;
+		
+		Console.Clear();
+		
+		for(int i = 1; i <= games.Count; i++)
+		{
+			Console.WriteLine(i.ToString() + ". " + games[i - 1].Name);
+		}
+		
+		do
+		{
+			Console.Write("\nChoose number of game: ");
+			index = Int32.Parse(Console.ReadLine()) - 1;
+		} while(index >= games.Count || index < 0);
+		
+		
+		Console.Write("Enter new name for '" + games[index].Name + "': ");
+		new_name = Console.ReadLine();
+		
+		businesslayer.editGame(games[index].ID, new_name);
+		
+		ShowMenu();
 	}
 }
