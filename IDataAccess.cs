@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 public interface IDataAccess
 {
-    void addGame(string name);
+    bool AddGame(string name, string developerName);
 
-    void addDeveloper(string name);
+    bool AddDeveloper(string name);
 
-    void editGame(Game game);
+    bool EditGame(Game game, string oldName);
 
-    void editDeveloper(Developer developer);
+    bool EditDeveloper(Developer developer, string oldName);
 
-    void deleteGame(int id);
+    bool DeleteGame(string name);
 
-    void deleteDeveloper(int id);
+    bool DeleteDeveloper(string name);
 
-    List<Game> getGames();
+    List<Game> GetGames();
 
-    List<Developer> getDevelopers();
+    List<Developer> GetDevelopers();
 }

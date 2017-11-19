@@ -4,22 +4,17 @@
     private string name;
     private Developer developer;
 
+    public Game(string name, Developer developer)
+    {
+        this.name = name;
+        this.developer = developer;
+    }
+
     public Game(int id, string name, Developer developer)
     {
         this.id = id;
         this.name = name;
         this.developer = developer;
-    }
-
-    public Game(int id, string name)
-    {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Game(string name)
-    {
-        this.name = name;
     }
 
     public int ID

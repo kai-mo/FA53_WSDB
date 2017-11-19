@@ -6,15 +6,15 @@ public class BusinessLayer1 : AbstractBusinessLayer
     public BusinessLayer1(IDataAccess dataAccess) : base(dataAccess)
     { }
 
-    public override List<Game> getGames()
+    public override List<Game> GetGames()
     {
-        var games = this.dataAccess.getGames();
-        return this.sortGamesList(games, "ASC");
+        var games = this.dataAccess.GetGames();
+        return this.SortGamesList(games, "ASC");
     }
 
-    public override List<Developer> getDevelopers()
+    public override List<Developer> GetDevelopers()
     {
-        var developers = this.dataAccess.getDevelopers();
-        return this.sortDevelopersList(developers, "ASC");
+        var developers = this.dataAccess.GetDevelopers();
+        return this.SortDevelopersList(developers, "ASC");
     }
 }

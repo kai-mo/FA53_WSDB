@@ -26,17 +26,17 @@ public class DataAccess3 : IDataAccess
 		games.Add(new Game(9, "FIFA 18", developers[3]));	
 	}
 
-    public void addGame(string name)
+    public void AddGame(string name)
     { 	
 		games.Add(new Game(name));
 	}
 
-    public void addDeveloper(string name)
+    public void AddDeveloper(string name)
     { 
 		developers.Add(new Developer(name));
 	}
 
-    public void editGame(Game game)
+    public void EditGame(Game game)
     { 
 		foreach(Game game_ in games)
 		{
@@ -48,7 +48,7 @@ public class DataAccess3 : IDataAccess
 		}
 	}
 
-    public void editDeveloper(Developer developer)
+    public void EditDeveloper(Developer developer)
     { 	
 		foreach(Developer developer_ in developers)
 		{
@@ -60,7 +60,7 @@ public class DataAccess3 : IDataAccess
 		}
 	}
 
-    public void deleteGame(int id)
+    public void DeleteGame(int id)
     { 
 		foreach(Game game in games)
 		{
@@ -72,7 +72,7 @@ public class DataAccess3 : IDataAccess
 		}
 	}
 
-    public void deleteDeveloper(int id)
+    public void DeleteDeveloper(int id)
     { 
 		foreach(Developer developer in developers)
 		{
@@ -84,12 +84,12 @@ public class DataAccess3 : IDataAccess
 		}
 	}
 
-    public List<Game> getGames()
+    public List<Game> GetGames()
     {
         return games;
     }
 
-    public List<Developer> getDevelopers()
+    public List<Developer> GetDevelopers()
     {
         return developers;
     }

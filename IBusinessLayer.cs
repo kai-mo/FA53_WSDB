@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 public interface IBusinessLayer
 {
-    void addGame(string name);
+    void AddGame(string name, string developerName);
 
-    void addDeveloper(string name);
+    void AddDeveloper(string name);
 
-    void editGame(int id, string name);
+    void EditGame(string name, string oldName);
 
-    void editDeveloper(int id, string name);
+    void EditDeveloper(string name, string oldName);
 
-    void deleteGame(int id);
+    void DeleteGame(string name);
 
-    void deleteDeveloper(int id);
+    void DeleteDeveloper(string name);
 
-    List<Game> getGames();
+    List<Game> GetGames();
 
-    List<Developer> getDevelopers();
+    List<Developer> GetDevelopers();
 }

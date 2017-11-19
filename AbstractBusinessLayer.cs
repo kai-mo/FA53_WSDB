@@ -11,43 +11,43 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
         this.dataAccess = dataAccess;
     }
 
-    public void addGame(string name)
+    public void AddGame(string name, string developerName)
     {
-        this.dataAccess.addGame(name);
+        this.dataAccess.AddGame(name, developerName);
     }
 
-    public void addDeveloper(string name)
+    public void AddDeveloper(string name)
     {
-        this.dataAccess.addDeveloper(name);
+        this.dataAccess.AddDeveloper(name);
     }
 
-    public void editGame(int id, string name)
+    public void EditGame(string name, string oldName)
     {
-        Game game = new Game(id, name);
-        this.dataAccess.editGame(game);
+        Game game = new Game(name);
+        this.dataAccess.EditGame(game, oldName);
     }
 
-    public void editDeveloper(int id, string name)
+    public void EditDeveloper(string name, string oldName)
     {
-        Developer developer = new Developer(id, name);
-        this.dataAccess.editDeveloper(developer);
+        Developer Developer = new Developer(name);
+        this.DataAccess.editDeveloper(developer, oldName);
     }
 
-    public void deleteGame(int id)
+    public void DeleteGame(string name)
     {
-        this.dataAccess.deleteGame(id);
+        this.DataAccess.deleteGame(name);
     }
 
-    public void deleteDeveloper(int id)
+    public void DeleteDeveloper(string name)
     {
-        this.dataAccess.deleteDeveloper(id);
+        this.dataAccess.deleteDeveloper(name);
     }
 
-    public abstract List<Game> getGames();
+    public abstract List<Game> GetGames();
 
-    public abstract List<Developer> getDevelopers();
+    public abstract List<Developer> GetDevelopers();
 
-    public List<Game> sortGamesList(List<Game> list, string order)
+    public List<Game> SortGamesList(List<Game> list, string order)
     {
         List<Game> sortedList;
         if (order == "DESC")
@@ -61,7 +61,7 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
         return sortedList;
     }
 
-    public List<Developer> sortDevelopersList(List<Developer> list, string order)
+    public List<Developer> SortDevelopersList(List<Developer> list, string order)
     {
         List<Developer> sortedList;
         if (order == "DESC")

@@ -56,7 +56,7 @@ Choose an option: ");
     {
         Console.Clear();
 
-        foreach(Game game in businesslayer.getGames())
+        foreach(Game game in businesslayer.GetGames())
         {
             Console.WriteLine("- " + game.Name);
         }
@@ -71,7 +71,7 @@ Choose an option: ");
     {
         Console.Clear();
 
-        foreach (Developer developer in businesslayer.getDevelopers())
+        foreach (Developer developer in businesslayer.GetDevelopers())
         {
             Console.WriteLine("- " + developer.Name);
         }
@@ -85,6 +85,7 @@ Choose an option: ");
     private void AddGame()
     {
         string new_game;
+        string developer_name;
 
         do
         {
@@ -95,7 +96,17 @@ Choose an option: ");
 
         if (!new_game.Equals("q"))
         {
-            businesslayer.addGame(new_game);
+            do
+            {
+                Console.Clear();
+                Console.Write(String.Format("Enter the name of the developer for game: {0} or q to abort: ", developer_name));
+                developer_name = Console.ReadLine();
+            } while (new_game.Equals(""));
+
+            if (!developer_name.Equals("q"))
+            {
+                businesslayer.AddGame(new_game, developer_name);
+            }
         }
 
         ShowMenu();
@@ -114,7 +125,7 @@ Choose an option: ");
 
         if (!new_developer.Equals("q"))
         {
-            businesslayer.addDeveloper(new_developer);
+            businesslayer.AddDeveloper(new_developer);
         }
 
         ShowMenu();
@@ -122,9 +133,10 @@ Choose an option: ");
 	
 	private void EditGame()
 	{
-		List<Game> games = businesslayer.getGames();
+		List<Game> games = businesslayer.GetGames();
 		int index;
 		string new_name;
+        string old_name;
 		
 		Console.Clear();
 		
@@ -141,20 +153,22 @@ Choose an option: ");
 		
 		
 		Console.Write("Enter new name for '" + games[index].Name + "': ");
-		new_name = Console.ReadLine();
+        old_name = games[index].Name;
+        new_name = Console.ReadLine();
 		
-		businesslayer.editGame(games[index].ID, new_name);
+		businesslayer.EditGame(new_name, old_name);
 		
 		ShowMenu();
 	}
 	
 	private void EditDeveloper()
 	{
-		List<Developer> developers = businesslayer.getDevelopers();
+		List<Developer> developers = businesslayer.GetDevelopers();
 		int index;
 		string new_name;
-		
-		Console.Clear();
+        string old_name;
+
+        Console.Clear();
 		
 		for(int i = 1; i <= developers.Count; i++)
 		{
@@ -169,16 +183,17 @@ Choose an option: ");
 		
 		
 		Console.Write("Enter new name for '" + developers[index].Name + "': ");
-		new_name = Console.ReadLine();
+        old_name = developers[index].Name;
+        new_name = Console.ReadLine();
 		
-		businesslayer.editDeveloper(developers[index].ID, new_name);
+		businesslayer.EditDeveloper(new_name, old_name);
 		
 		ShowMenu();
 	}
 	
 	private void DeleteDeveloper()
 	{
-		List<Developer> developers = businesslayer.getDevelopers();
+		List<Developer> developers = businesslayer.GetDevelopers();
 		int index;
 		
 		Console.Clear();
@@ -194,14 +209,14 @@ Choose an option: ");
 			index = Int32.Parse(Console.ReadLine()) - 1;
 		} while(index >= developers.Count || index < 0);
 		
-		businesslayer.deleteDeveloper(developers[index].ID);
+		businesslayer.DeleteDeveloper(developers[index].Name);
 		
 		ShowMenu();
 	}
 	
 	private void DeleteGame()
 	{
-		List<Game> games = businesslayer.getGames();
+		List<Game> games = businesslayer.GetGames();
 		int index;
 		
 		Console.Clear();
@@ -217,15 +232,15 @@ Choose an option: ");
 			index = Int32.Parse(Console.ReadLine()) - 1;
 		} while(index >= games.Count || index < 0);
 		
-		businesslayer.deleteGame(games[index].ID);
+		businesslayer.DeleteGame(games[index].Name);
 		
 		ShowMenu();
 	}
 	
 	private void ShowAssignments()
 	{
-		List<Game> games = businesslayer.getGames();
-		List<Developer> developers = businesslayer.getDevelopers();
+		List<Game> games = businesslayer.GetGames();
+		List<Developer> developers = businesslayer.GetDevelopers();
 	
 		Console.Clear();
 	

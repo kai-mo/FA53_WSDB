@@ -1,7 +1,23 @@
-﻿public class Developer
+﻿using System.Collections.Generic;
+
+public class Developer
 {
     private int id;
     private string name;
+    private List<Game> games;
+
+    public Developer(int id, string name, List<Game> games)
+    {
+        this.id = id;
+        this.name = name;
+        this.games = games;
+    }
+
+    public Developer(string name, List<Game> games)
+    {
+        this.name = name;
+        this.games = games;
+    }
 
     public Developer(int id, string name)
     {
@@ -24,5 +40,11 @@
     {
         get { return this.name; }
         set { this.name = value; }
+    }
+
+    public List<Game> Games
+    {
+        get { return this.games; }
+        set { this.games = value; }
     }
 }
