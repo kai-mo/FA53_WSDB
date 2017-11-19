@@ -84,8 +84,7 @@ Choose an option: ");
 
     private void AddGame()
     {
-        string new_game;
-        string developer_name;
+        string new_game, developer_name = "";
 
         do
         {
