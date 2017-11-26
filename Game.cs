@@ -1,9 +1,12 @@
-﻿public class Game
+﻿using Newtonsoft.Json;
+
+public class Game
 {
     private int id;
     private string name;
     private Developer developer;
 
+    [JsonConstructor]
     public Game(string name)
     {
         this.name = name;

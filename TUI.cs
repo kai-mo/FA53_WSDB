@@ -238,7 +238,6 @@ Choose an option: ");
 	
 	private void ShowAssignments()
 	{
-		List<Game> games = businesslayer.GetGames();
 		List<Developer> developers = businesslayer.GetDevelopers();
 	
 		Console.Clear();
@@ -247,13 +246,10 @@ Choose an option: ");
 		{
 			Console.WriteLine(developer.Name + ":");
 			
-			foreach(Game game in games)
+			foreach(Game game in developer.Games)
 			{
-				if(game.Developer.ID == developer.ID)
-				{
-					Console.WriteLine("\t" + game.Name);
-				}
-			}
+                Console.WriteLine("\t" + game.Name);
+            }
 			
 			Console.WriteLine();
 		}

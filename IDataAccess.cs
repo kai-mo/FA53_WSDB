@@ -7,9 +7,9 @@ public interface IDataAccess
 
     bool AddDeveloper(string name);
 
-    bool EditGame(Game game, string oldName);
+    bool EditGame(string newName, string oldName);
 
-    bool EditDeveloper(Developer developer, string oldName);
+    bool EditDeveloper(string newName, string oldName);
 
     bool DeleteGame(string name);
 

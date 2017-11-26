@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class Developer
 {
@@ -17,6 +18,7 @@ public class Developer
         this.name = name;
     }
 
+    [JsonConstructor]
     public Developer(string name, List<Game> games)
     {
         this.name = name;

@@ -21,16 +21,14 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
         this.dataAccess.AddDeveloper(name);
     }
 
-    public void EditGame(string name, string oldName)
+    public void EditGame(string newName, string oldName)
     {
-        Game game = new Game(name);
-        this.dataAccess.EditGame(game, oldName);
+        this.dataAccess.EditGame(newName, oldName);
     }
 
-    public void EditDeveloper(string name, string oldName)
+    public void EditDeveloper(string newName, string oldName)
     {
-        Developer developer = new Developer(name);
-        this.dataAccess.EditDeveloper(developer, oldName);
+        this.dataAccess.EditDeveloper(newName, oldName);
     }
 
     public void DeleteGame(string name)

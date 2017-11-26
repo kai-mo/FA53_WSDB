@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 
+/** 
+ * This DataAccess layer reads and saves the data to the json file
+ */
 public class DataAccess2 : IDataAccess
 {
     private string filePath = @"GamesManager.json";
@@ -48,7 +51,8 @@ public class DataAccess2 : IDataAccess
             return true;
         }
         this.developers.Add(new Developer(developerName, new List<Game> { newGame }));
-        return false;
+        WriteToJsonFile();
+        return true;
     }
 
     public bool AddDeveloper(string name)
@@ -67,7 +71,7 @@ public class DataAccess2 : IDataAccess
         return false;
     }
 
-    public bool EditGame(Game game, string oldName)
+    public bool EditGame(string newName, string oldName)
     {
         foreach (var existingDeveloper in this.developers)
         {
@@ -76,7 +80,7 @@ public class DataAccess2 : IDataAccess
             {
                 if (developerGame.Name == oldName)
                 {
-                    existingDeveloper.Games[index] = game;
+                    existingDeveloper.Games[index].Name = newName;
                     WriteToJsonFile();
                     return true;
                 }
@@ -86,13 +90,29 @@ public class DataAccess2 : IDataAccess
         throw new Exception("Game not found.");
     }
 
-    public bool EditDeveloper(Developer developer, string oldName)
+    public bool EditDeveloper(string newName, string oldName)
     {
         Developer developerToEdit = this.developers.Find(item => item.Name == oldName);
         if (developerToEdit != null)
         {
             int index = developers.IndexOf(developerToEdit);
-            developers[index] = developer;
+            developers[index].Name = newName;
+
+            // change developer name for games with this developer
+            foreach (var existingDeveloper in this.developers)
+            {
+                if (existingDeveloper.Games != null)
+                {
+                    foreach (var developerGame in existingDeveloper.Games)
+                    {
+                        if (oldName == developerGame.Name)
+                        {
+                            developerGame.Name = newName;
+                        }
+                    }
+                }
+            }
+
             WriteToJsonFile();
             return true;
         }
@@ -181,7 +201,7 @@ public class DataAccess2 : IDataAccess
         string json = File.ReadAllText(this.filePath);
         try
         {
-            List<Developer> developersTest = JsonConvert.DeserializeObject<List<Developer>>(json);
+            developers = JsonConvert.DeserializeObject<List<Developer>>(json);
             if (developers == null)
             {
                 developers = new List<Developer>();

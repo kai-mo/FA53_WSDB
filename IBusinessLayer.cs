@@ -7,9 +7,9 @@ public interface IBusinessLayer
 
     void AddDeveloper(string name);
 
-    void EditGame(string name, string oldName);
+    void EditGame(string newName, string oldName);
 
-    void EditDeveloper(string name, string oldName);
+    void EditDeveloper(string newName, string oldName);
 
     void DeleteGame(string name);
 

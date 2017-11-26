@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+/** 
+ * This class only for testing purposes
+ * Some parts are in comments because the interface has changed
+ * If you want to use these functions you have to edit them to match the interface
+ */
 public class DataAccess3 : IDataAccess
 {
 	private List<Game> games;
@@ -38,29 +43,29 @@ public class DataAccess3 : IDataAccess
         return true;
 	}
 
-    public bool EditGame(Game game, string oldName)
+    public bool EditGame(string newName, string oldName)
     { 
-		foreach(Game game_ in games)
-		{
-			if(game_.ID == game.ID) 
-			{
-				games[games.IndexOf(game_)].Name = game.Name;
-				break;
-			}
-		}
+		//foreach(Game game_ in games)
+		//{
+		//	if(game_.ID == game.ID) 
+		//	{
+		//		games[games.IndexOf(game_)].Name = game.Name;
+		//		break;
+		//	}
+		//}
         return true;
 	}
 
-    public bool EditDeveloper(Developer developer, string oldName)
+    public bool EditDeveloper(string newName, string oldName)
     { 	
-		foreach(Developer developer_ in developers)
-		{
-			if(developer_.ID == developer.ID) 
-			{
-				developers[developers.IndexOf(developer_)].Name = developer.Name;
-				break;
-			}
-		}
+		//foreach(Developer developer_ in developers)
+		//{
+		//	if(developer_.ID == developer.ID) 
+		//	{
+		//		developers[developers.IndexOf(developer_)].Name = developer.Name;
+		//		break;
+		//	}
+		//}
         return true;
 	}
 
