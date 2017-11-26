@@ -1,1 +1,1 @@
-C:\Windows\Microsoft.NET\Framework64\v3.5\csc.exe /out:GamesManager.exe *.cs
+C:\Windows\Microsoft.NET\Framework64\v3.5\csc.exe /reference:Newtonsoft.Json.dll /out:GamesManager.exe *.cs

@@ -24,3 +24,9 @@ Create new games and developers and define relations between them.
 
 - SQLite as relational database
 - JSON
+
+# Use Json.Net
+- In Visual Studio click Tools > NuGet Package Manager > Packager Manager Console
+- Enter in console: Install-Package Newtonsoft.Json
+- copy Newtonsoft.Json.dll and Newtonsoft.Json.xml from packages\Newtonsoft.Json.10.0.3\lib\net35\ into project root
+- now you can compile with ./Compile.BAT
