@@ -290,3 +290,8 @@ __pycache__/
 *.exe
 
 GamesManager.json
+*.csproj
+packages.config
+*.dll
+Newtonsoft.Json.xml
+*.sln
