@@ -6,17 +6,9 @@ public class Developer
     private string name;
     private List<Game> games;
 
-    public Developer(int id, string name, List<Game> games)
-    {
-        this.id = id;
-        this.name = name;
-        this.games = games;
-    }
-
-    public Developer(string name, List<Game> games)
+    public Developer(string name)
     {
         this.name = name;
-        this.games = games;
     }
 
     public Developer(int id, string name)
@@ -25,9 +17,17 @@ public class Developer
         this.name = name;
     }
 
-    public Developer(string name)
+    public Developer(string name, List<Game> games)
     {
         this.name = name;
+        this.games = games;
+    }
+
+    public Developer(int id, string name, List<Game> games)
+    {
+        this.id = id;
+        this.name = name;
+        this.games = games;
     }
 
     public int ID

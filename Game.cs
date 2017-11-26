@@ -4,6 +4,11 @@
     private string name;
     private Developer developer;
 
+    public Game(string name)
+    {
+        this.name = name;
+    }
+
     public Game(string name, Developer developer)
     {
         this.name = name;
