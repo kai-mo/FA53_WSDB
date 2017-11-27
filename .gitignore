@@ -295,3 +295,5 @@ packages.config
 *.dll
 Newtonsoft.Json.xml
 *.sln
+*.sqlite
+System.Data.SQLite.xml
