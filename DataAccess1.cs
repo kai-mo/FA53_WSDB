@@ -120,7 +120,7 @@ public class DataAccess1 : IDataAccess
     {
         List<string> commands = new List<string>()
             {
-                "INSERT INTO developers (name, games) VALUES ('CD Project Red')",
+                "INSERT INTO developers (name) VALUES ('CD Project Red')",
                 "INSERT INTO developers(name) VALUES('Naughty Dog')",
                 "INSERT INTO developers(name) VALUES('Blizzard')",
                 "INSERT INTO developers(name) VALUES('Rocksteady Studios');",
@@ -138,7 +138,30 @@ public class DataAccess1 : IDataAccess
         {
             throw new Exception("Developer name cannot be an empty string.");
         }
-        return true;
+        if (!CheckIfDeveloperExists(developerName))
+        {
+            AddDeveloper(developerName);
+        }
+        Developer developer = GetDeveloper(developerName);
+        int developerId = developer.Id;
+        using (SQLiteConnection databaseConnection = GetDatabaseConnection())
+        {
+            int rowsAffected = 0;
+            databaseConnection.Open();
+            SQLiteCommand command = new SQLiteCommand
+            {
+                CommandText = "INSERT INTO games(name, developer) VALUES(@name, @developerId)",
+                Connection = databaseConnection
+            };
+            SQLiteParameter nameParam = new SQLiteParameter("@name", name);
+            SQLiteParameter developerIdParam = new SQLiteParameter("@developerId", developerId);
+            command.Parameters.Add(nameParam);
+            command.Parameters.Add(developerIdParam);
+            command.Prepare();
+            rowsAffected += command.ExecuteNonQuery();
+            databaseConnection.Close();
+            return (rowsAffected > 0);
+        }
     }
 
     public bool AddDeveloper(string name)
@@ -146,6 +169,10 @@ public class DataAccess1 : IDataAccess
         if (name == "")
         {
             throw new Exception("Developer name cannot be an empty string.");
+        }
+        if (CheckIfDeveloperExists(name))
+        {
+            throw new Exception("Developer already exisits");
         }
         using (SQLiteConnection databaseConnection = GetDatabaseConnection())
         {
@@ -359,6 +386,25 @@ public class DataAccess1 : IDataAccess
         }
     }
 
+    private bool CheckIfDeveloperExists(string name)
+    {
+        using (SQLiteConnection databaseConnection = GetDatabaseConnection())
+        {
+            databaseConnection.Open();
+            SQLiteCommand command = new SQLiteCommand
+            {
+                CommandText = "SELECT COUNT(*) FROM developers WHERE name = @name",
+                Connection = databaseConnection
+            };
+            SQLiteParameter nameParam = new SQLiteParameter("@name", name);
+            command.Parameters.Add(nameParam);
+            command.Prepare();
+            int count = Convert.ToInt32(command.ExecuteScalar());
+            databaseConnection.Close();
+            return (count > 0);
+        }
+    }
+
     private List<Game> GetDeveloperGames(int developerId)
     {
         using (SQLiteConnection databaseConnection = GetDatabaseConnection())
@@ -397,7 +443,6 @@ public class DataAccess1 : IDataAccess
         {
             databaseConnection.Open();
             Developer developer;
-            List<Developer> developers = new List<Developer>();
             SQLiteCommand command = new SQLiteCommand
             {
                 CommandText = "SELECT * FROM developers WHERE id = @id",
@@ -413,6 +458,51 @@ public class DataAccess1 : IDataAccess
                 {
                     id = Convert.ToInt32(reader["id"]);
                     string name = Convert.ToString(reader["name"]);
+                    developer = new Developer(id, name);
+
+                    string gamesString = Convert.ToString(reader["games"]);
+                    if (gamesString.Length > 0)
+                    {
+                        List<Game> games = GetDeveloperGames(id);
+                        developer.Games = games;
+                    }
+
+                    reader.Close();
+                    databaseConnection.Close();
+                    return new Developer(id, name);
+                }
+                throw new SQLiteException("Developer not found");
+            }
+            else
+            {
+                reader.Close();
+                databaseConnection.Close();
+                throw new SQLiteException("Developer not found");
+            }
+        }
+    }
+
+    private Developer GetDeveloper(string name)
+    {
+        using (SQLiteConnection databaseConnection = GetDatabaseConnection())
+        {
+            databaseConnection.Open();
+            Developer developer;
+            SQLiteCommand command = new SQLiteCommand
+            {
+                CommandText = "SELECT * FROM developers WHERE name = @name",
+                Connection = databaseConnection
+            };
+            SQLiteParameter nameParam = new SQLiteParameter("@name", name);
+            command.Parameters.Add(nameParam);
+            command.Prepare();
+            SQLiteDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int id = Convert.ToInt32(reader["id"]);
+                    name = Convert.ToString(reader["name"]);
                     developer = new Developer(id, name);
 
                     string gamesString = Convert.ToString(reader["games"]);
