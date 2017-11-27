@@ -15,10 +15,8 @@ public class GamesManager
 		
 		switch (args[2])
 		{
-            // TODO: implement DataAccess1 and DataAccess2 classes
-            //case "1": dataAccess = new DataAccess1(); break;
+            case "1": dataAccess = new DataAccess1(); break;
             case "2": dataAccess = new DataAccess2(); break;
-            case "3": dataAccess = new DataAccess3(); break;
 			default: ShowDataAccessError(); return;
 		}
 

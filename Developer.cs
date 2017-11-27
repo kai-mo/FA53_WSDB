@@ -32,7 +32,7 @@ public class Developer
         this.games = games;
     }
 
-    public int ID
+    public int Id
     {
         get { return this.id; }
         set { this.id = value; }

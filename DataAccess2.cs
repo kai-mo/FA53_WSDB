@@ -19,7 +19,7 @@ public class DataAccess2 : IDataAccess
 
     public bool AddGame(string name, string developerName)
     {
-        if (name == "" || developerName == "")
+        if (name == "")
         {
             throw new Exception("Game name cannot be an empty string.");
         }
@@ -43,7 +43,7 @@ public class DataAccess2 : IDataAccess
             }
         }
 
-        Game newGame = new Game(name, developer);
+        Game newGame = new Game(name);
         if (developer != null)
         {
             developer.Games.Add(newGame);
