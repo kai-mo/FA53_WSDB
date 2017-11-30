@@ -29,7 +29,7 @@ Create new games and developers and define relations between them.
 ```
 ./Compile.BAT
 ```
-- This creates GamesManager.exe open it with ./GamesManager.exe (tui|gui) (1|2) (1|2)
+- This creates GamesManager.exe open it with:
 ```
-./GamesManager.exe (tui|gui) (1|2) (1|2)
+./GamesManager.exe (tui|gui) (asc|desc) (sqlite|json)
 ```
