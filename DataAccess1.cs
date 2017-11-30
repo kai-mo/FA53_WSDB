@@ -100,9 +100,9 @@ public class DataAccess1 : IDataAccess
         List<string> commands = new List<string>()
             {
                 "INSERT INTO games (name, developer) VALUES ('The Witcher 1', 1)",
-                "INSERT INTO games(name) VALUES('The Witcher 2')",
-                "INSERT INTO games(name) VALUES('The Witcher 3')",
-                "INSERT INTO games(name) VALUES('The Last of US')",
+                "INSERT INTO games(name, developer) VALUES('The Witcher 2', 1)",
+                "INSERT INTO games(name, developer) VALUES('The Witcher 3', 1)",
+                "INSERT INTO games(name, developer) VALUES('The Last of US', 2)",
                 "INSERT INTO games(name) VALUES('Uncharted 1')",
                 "INSERT INTO games(name) VALUES('Uncharted 2')",
                 "INSERT INTO games(name) VALUES('Uncharted 3')",
@@ -354,35 +354,12 @@ public class DataAccess1 : IDataAccess
                 int id = Convert.ToInt32(reader["id"]);
                 string name = Convert.ToString(reader["name"]);
                 Developer developer = new Developer(id, name);
-
-                if (CheckIfDeveloperHasGames(id))
-                {
-                    List<Game> games = GetDeveloperGames(id);
-                    developer.Games = games;
-                }
+                List<Game> games = GetDeveloperGames(id);
+                developer.Games = games;
                 developers.Add(developer);
             }
             databaseConnection.Close();
             return developers;
-        }
-    }
-
-    private bool CheckIfDeveloperHasGames(int id)
-    {
-        using (SQLiteConnection databaseConnection = GetDatabaseConnection())
-        {
-            databaseConnection.Open();
-            SQLiteCommand command = new SQLiteCommand
-            {
-                CommandText = "SELECT COUNT(*) FROM games WHERE developer = @id",
-                Connection = databaseConnection
-            };
-            SQLiteParameter idParam = new SQLiteParameter("@id", id);
-            command.Parameters.Add(idParam);
-            command.Prepare();
-            int count = Convert.ToInt32(command.ExecuteScalar());
-            databaseConnection.Close();
-            return (count > 0);
         }
     }
 
@@ -428,7 +405,6 @@ public class DataAccess1 : IDataAccess
                     string name = Convert.ToString(reader["name"]);
                     Game game = new Game(id, name);
                     games.Add(game);
-                    break;
                 }
             }
             reader.Close();
@@ -459,16 +435,14 @@ public class DataAccess1 : IDataAccess
                     id = Convert.ToInt32(reader["id"]);
                     string name = Convert.ToString(reader["name"]);
                     developer = new Developer(id, name);
-
-                    string gamesString = Convert.ToString(reader["games"]);
-                    if (gamesString.Length > 0)
-                    {
-                        List<Game> games = GetDeveloperGames(id);
-                        developer.Games = games;
-                    }
-
                     reader.Close();
                     databaseConnection.Close();
+
+                    List<Game> games = GetDeveloperGames(id);
+                    if (games.Count > 0)
+                    {
+                        developer.Games = games;
+                    }
                     return new Developer(id, name);
                 }
                 throw new SQLiteException("Developer not found");
@@ -504,16 +478,14 @@ public class DataAccess1 : IDataAccess
                     int id = Convert.ToInt32(reader["id"]);
                     name = Convert.ToString(reader["name"]);
                     developer = new Developer(id, name);
-
-                    string gamesString = Convert.ToString(reader["games"]);
-                    if (gamesString.Length > 0)
-                    {
-                        List<Game> games = GetDeveloperGames(id);
-                        developer.Games = games;
-                    }
-
                     reader.Close();
                     databaseConnection.Close();
+
+                    List<Game> games = GetDeveloperGames(id);
+                    if (games.Count > 0)
+                    {
+                        developer.Games = games;
+                    }
                     return new Developer(id, name);
                 }
                 throw new SQLiteException("Developer not found");
