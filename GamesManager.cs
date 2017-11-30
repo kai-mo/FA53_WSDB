@@ -16,9 +16,8 @@ public class GamesManager
 		switch (args[2].ToLower())
 		{
 			// TODO: implement DataAccess1 and DataAccess2 classes
-            //case "sqlite": dataAccess = new DataAccess1(); break;
-            //case "json": dataAccess = new DataAccess2(); break;
-            case "test": dataAccess = new DataAccess3(); break;
+            case "sqlite": dataAccess = new DataAccess1(); break;
+            case "json": dataAccess = new DataAccess2(); break;
 			default: ShowDataAccessError(); return;
 		}
 
@@ -46,7 +45,7 @@ public class GamesManager
 	
 	private static void ShowDataAccessError()
 	{
-		Console.WriteLine("Please enter a valid data access option [sqlite|json|test]!");
+		Console.WriteLine("Please enter a valid data access option [sqlite|json]!");
 	}
 	
 	private static void ShowBusinessLayerError()
