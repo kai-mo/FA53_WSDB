@@ -110,8 +110,7 @@ public class DataAccess1 : IDataAccess
                 "INSERT INTO games(name) VALUES('Titan Quest')",
                 "INSERT INTO games(name) VALUES('StarCraft 2')",
                 "INSERT INTO games(name) VALUES('Batman: Arkham Asylum')",
-                "INSERT INTO games(name) VALUES('Batman: Arkham Knight')",
-                "INSERT INTO games(name) VALUES('StarCraft 2')"
+                "INSERT INTO games(name) VALUES('Batman: Arkham Knight')"
             };
         return commands;
     }
@@ -268,6 +267,7 @@ public class DataAccess1 : IDataAccess
     {
         using (SQLiteConnection databaseConnection = GetDatabaseConnection())
         {
+            DeleteDeveloperGames(name);
             int rowsAffected = 0;
             databaseConnection.Open();
             SQLiteCommand command = new SQLiteCommand
@@ -280,7 +280,6 @@ public class DataAccess1 : IDataAccess
             command.Prepare();
             rowsAffected += command.ExecuteNonQuery();
             databaseConnection.Close();
-            DeleteDeveloperGames(name);
             return (rowsAffected > 0);
         }
     }
@@ -293,7 +292,7 @@ public class DataAccess1 : IDataAccess
             databaseConnection.Open();
             SQLiteCommand command = new SQLiteCommand
             {
-                CommandText = "DELETE FROM games INNER JOIN developers ON games.id = developers.id WHERE developer.name = @name",
+                CommandText = "DELETE FROM games WHERE developer = (SELECT id FROM developers WHERE name = @name)",
                 Connection = databaseConnection
             };
             SQLiteParameter nameParam = new SQLiteParameter("@name", name);
