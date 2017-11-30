@@ -24,10 +24,10 @@ public class GamesManager
 
 		IBusinessLayer businessLayer;
 		
-		switch (args[1])
+		switch (args[1].ToLower())
 		{
-			case "1": businessLayer = new BusinessLayer1(dataAccess); break;
-			case "2": businessLayer = new BusinessLayer2(dataAccess); break;
+			case "asc": businessLayer = new BusinessLayer1(dataAccess); break;
+			case "desc": businessLayer = new BusinessLayer2(dataAccess); break;
 			default: ShowBusinessLayerError(); return;
 		}
 		
@@ -51,7 +51,7 @@ public class GamesManager
 	
 	private static void ShowBusinessLayerError()
 	{
-		Console.WriteLine("Please enter a valid businesslayer option [1|2]!");
+		Console.WriteLine("Please enter a valid businesslayer option [asc|desc]!");
 	}
 	
     private static void ShowViewError()
