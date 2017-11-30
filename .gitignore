@@ -297,3 +297,4 @@ Newtonsoft.Json.xml
 *.sln
 *.sqlite
 System.Data.SQLite.xml
+App.config
