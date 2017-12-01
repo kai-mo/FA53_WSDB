@@ -15,7 +15,6 @@ public class GamesManager
 		
 		switch (args[2].ToLower())
 		{
-			// TODO: implement DataAccess1 and DataAccess2 classes
             case "sqlite": dataAccess = new DataAccess1(); break;
             case "json": dataAccess = new DataAccess2(); break;
 			default: ShowArgumentError(); return;
