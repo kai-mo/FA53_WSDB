@@ -6,11 +6,15 @@ public class GUI : Form
 {
     private IBusinessLayer businesslayer;
 
+    private Button btnAddDeveloper;
+
     private GroupBox gbxGames;
     private GroupBox gbxDevelopers;
 
     private ListBox lbxGames;
     private ListBox lbxDevelopers;
+
+    private TextBox tbxAddDeveloper;
 
     public GUI(IBusinessLayer businesslayer)
     {
@@ -28,6 +32,13 @@ public class GUI : Form
 
     private void InitializeComponents()
     {
+        btnAddDeveloper = new Button();
+        btnAddDeveloper.Location = new Point(270, 400);
+        btnAddDeveloper.Size = new Size(250, 30);
+        btnAddDeveloper.Text = "Add Developer";
+        btnAddDeveloper.Click += new System.EventHandler(this.btnAddDeveloper_Click);
+        Controls.Add(btnAddDeveloper);
+
         gbxGames = new GroupBox();
         gbxGames.Text = "Games";
         gbxGames.Location = new Point(10, 10);
@@ -47,6 +58,11 @@ public class GUI : Form
         lbxDevelopers = new ListBox();
         lbxDevelopers.Dock = DockStyle.Fill;
         gbxDevelopers.Controls.Add(lbxDevelopers);
+
+        tbxAddDeveloper = new TextBox();
+        tbxAddDeveloper.Location = new Point(270, 370);
+        tbxAddDeveloper.Size = new Size(250, 30);
+        Controls.Add(tbxAddDeveloper);
     }
 
     private void LoadGames()
@@ -67,5 +83,16 @@ public class GUI : Form
         {
             lbxDevelopers.Items.Add(developer.Name);
         }
+    }
+
+    private void btnAddDeveloper_Click(object sender, System.EventArgs e)
+    {
+        if (tbxAddDeveloper.Text != "")
+        {
+            businesslayer.AddDeveloper(tbxAddDeveloper.Text);
+            tbxAddDeveloper.Clear();
+        }
+
+        LoadDevelopers();
     }
 }
