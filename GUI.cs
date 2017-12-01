@@ -12,6 +12,7 @@ public class GUI : Form
     {
         this.businesslayer = businesslayer;
         this.Text = "Games Manager";
+        this.Size = new Size(500, 500);
 
         gbxGames = new GroupBox();
         gbxGames.Text = "Games";
