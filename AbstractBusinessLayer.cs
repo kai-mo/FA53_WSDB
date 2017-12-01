@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+// TODO check if excpeptions can be simplified
 public abstract class AbstractBusinessLayer : IBusinessLayer
 {
     protected IDataAccess dataAccess;
@@ -13,21 +14,61 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
 
     public void AddGame(string name, string developerName)
     {
+        if (name.Equals(""))
+        {
+            throw new Exception("Game name cannot be an empty string.");
+        }
+        if (developerName.Equals(""))
+        {
+            throw new Exception("Developer name cannot be an empty string.");
+        }
+        // TODO check in each interface if developer already exists
+        //if (!CheckIfDeveloperExists(developerName))
+        //{
+        //    AddDeveloper(developerName);
+        //}
+        // TODO check in each interface if game already exists
         this.dataAccess.AddGame(name, developerName);
     }
 
     public void AddDeveloper(string name)
     {
+        if (name.Equals(""))
+        {
+            throw new Exception("Developer name cannot be an empty string.");
+        }
+        // TODO check in each interface if developer already exists
+        //if (CheckIfDeveloperExists(name))
+        //{
+        //    throw new Exception("Developer already exisits");
+        //}
         this.dataAccess.AddDeveloper(name);
     }
 
     public void EditGame(string newName, string oldName)
     {
+        if (newName.Equals(""))
+        {
+            throw new Exception("Game name cannot be an empty string.");
+        }
+        if (oldName.Equals(""))
+        {
+            throw new Exception("Old game name cannot be an empty string.");
+        }
         this.dataAccess.EditGame(newName, oldName);
     }
 
     public void EditDeveloper(string newName, string oldName)
     {
+
+        if (newName.Equals(""))
+        {
+            throw new Exception("Developer name cannot be an empty string.");
+        }
+        if (oldName.Equals(""))
+        {
+            throw new Exception("Old developer name cannot be an empty string.");
+        }
         this.dataAccess.EditDeveloper(newName, oldName);
     }
 

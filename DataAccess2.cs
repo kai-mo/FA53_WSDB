@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 
-/** 
- * This DataAccess layer reads and saves the data to the json file
- */
+ // TODO check if some exceptions should be called in the business layer
+ // TODO check if we can create a unique id for each record
 public class DataAccess2 : IDataAccess
 {
     private string filePath = @"GamesManager.json";

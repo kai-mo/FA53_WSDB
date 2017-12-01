@@ -10,16 +10,20 @@ static class DataAcess1TestingData
     {
         using (SQLiteConnection databaseConnection = GetDatabaseConnection())
         {
+            databaseConnection.Open();
             if (CheckIfTableIsEmpty("games") || CheckIfTableIsEmpty("developers"))
             {
-                databaseConnection.Open();
                 if (CheckIfTableIsEmpty("games"))
                 {
                     List<string> gameCommands = GetTestingGamesCommands();
                     foreach (var gameCommand in gameCommands)
                     {
-                        SQLiteCommand command = new SQLiteCommand { CommandText = gameCommand, Connection = databaseConnection };
-                        command.ExecuteNonQuery();
+                        using(SQLiteCommand command = new SQLiteCommand())
+                        {
+                            command.CommandText = gameCommand;
+                            command.Connection = databaseConnection;
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
 
@@ -28,31 +32,34 @@ static class DataAcess1TestingData
                     List<string> developerCommands = GetTestingDevelopersCommands();
                     foreach (var developerCommand in developerCommands)
                     {
-                        SQLiteCommand command = new SQLiteCommand { CommandText = developerCommand, Connection = databaseConnection };
-                        command.ExecuteNonQuery();
+                        using (SQLiteCommand command = new SQLiteCommand())
+                        {
+                            command.CommandText = developerCommand;
+                            command.Connection = databaseConnection;
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
-                databaseConnection.Close();
             }
         }
     }
 
     static private bool CheckIfTableIsEmpty(string tableName)
     {
+        int count = 0;
         using (SQLiteConnection databaseConnection = GetDatabaseConnection())
         {
             databaseConnection.Open();
-            SQLiteCommand command = new SQLiteCommand
+            using(SQLiteCommand command = new SQLiteCommand())
             {
-                CommandText = "SELECT COUNT(*) FROM " + Convert.ToString(tableName),
-                Connection = databaseConnection
-            };
-            command.Prepare();
-            int count = Convert.ToInt32(command.ExecuteScalar());
-            databaseConnection.Close();
-            return (count == 0);
+                // TODO implement a solution that is more secure
+                command.CommandText = "SELECT COUNT(*) FROM " + Convert.ToString(tableName);
+                command.Connection = databaseConnection;
+                count = Convert.ToInt32(command.ExecuteScalar());
+                return (count == 0);
             }
         }
+    }
 
     static private List<string> GetTestingGamesCommands()
     {
