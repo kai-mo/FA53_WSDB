@@ -32,7 +32,7 @@ public class GamesManager
         switch (args[0].ToLower())
         {
             case "tui": new TUI(businessLayer); break;
-            case "gui": Application.Run(new GUI()); break;
+            case "gui": Application.Run(new GUI(businessLayer)); break;
             default: ShowArgumentError(); return;
         }
     }

@@ -4,7 +4,10 @@ using System.Windows.Forms;
 
 public class GUI : Form
 {
-	public GUI()
+    private IBusinessLayer businesslayer;
+
+    public GUI(IBusinessLayer businesslayer)
 	{
+        this.businesslayer = businesslayer;
     }
 }
