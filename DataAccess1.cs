@@ -53,7 +53,7 @@ public class DataAccess1 : IDataAccess
         }
         if (!CheckIfDeveloperExists(developerName))
         {
-            AddDeveloper(developerName); 
+            AddDeveloper(developerName);
         }
         Developer developer = GetDeveloper(developerName);
         int developerId = developer.Id;
