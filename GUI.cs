@@ -20,6 +20,14 @@ public class GUI : Form
         this.Size = new Size(545, 500);
         this.Text = "Games Manager";
 
+        InitializeComponents();
+
+        LoadGames();
+        LoadDevelopers();
+    }
+
+    private void InitializeComponents()
+    {
         gbxGames = new GroupBox();
         gbxGames.Text = "Games";
         gbxGames.Location = new Point(10, 10);
@@ -39,9 +47,6 @@ public class GUI : Form
         lbxDevelopers = new ListBox();
         lbxDevelopers.Dock = DockStyle.Fill;
         gbxDevelopers.Controls.Add(lbxDevelopers);
-
-        LoadGames();
-        LoadDevelopers();
     }
 
     private void LoadGames()
