@@ -7,14 +7,21 @@ public class GUI : Form
     private IBusinessLayer businesslayer;
 
     private Button btnAddDeveloper;
+    private Button btnAddGame;
+
+    private ComboBox cbxDevelopers;
+    private const string CBX_DEVELOPERS_DEFAULT_TEXT = "Choose Developer";
 
     private GroupBox gbxGames;
     private GroupBox gbxDevelopers;
+
+    private Label lblAddGame;
 
     private ListBox lbxGames;
     private ListBox lbxDevelopers;
 
     private TextBox tbxAddDeveloper;
+    private TextBox tbxAddGame;
 
     public GUI(IBusinessLayer businesslayer)
     {
@@ -39,6 +46,19 @@ public class GUI : Form
         btnAddDeveloper.Click += new System.EventHandler(this.btnAddDeveloper_Click);
         Controls.Add(btnAddDeveloper);
 
+        btnAddGame = new Button();
+        btnAddGame.Location = new Point(10, 430);
+        btnAddGame.Size = new Size(250, 30);
+        btnAddGame.Text = "Add Game";
+        btnAddGame.Click += new System.EventHandler(this.btnAddGame_Click);
+        Controls.Add(btnAddGame);
+
+        cbxDevelopers = new ComboBox();
+        cbxDevelopers.Location = new Point(10, 400);
+        cbxDevelopers.Size = new Size(250, 30);
+        cbxDevelopers.Text = CBX_DEVELOPERS_DEFAULT_TEXT;
+        Controls.Add(cbxDevelopers);
+
         gbxGames = new GroupBox();
         gbxGames.Text = "Games";
         gbxGames.Location = new Point(10, 10);
@@ -50,6 +70,12 @@ public class GUI : Form
         gbxDevelopers.Location = new Point(270, 10);
         gbxDevelopers.Size = new Size(250, 350);
         Controls.Add(gbxDevelopers);
+
+        lblAddGame = new Label();
+        lblAddGame.AutoSize = true;
+        lblAddGame.Location = new Point(10, 370);
+        lblAddGame.Text = "Name:";
+        Controls.Add(lblAddGame);
 
         lbxGames = new ListBox();
         lbxGames.Dock = DockStyle.Fill;
@@ -63,6 +89,11 @@ public class GUI : Form
         tbxAddDeveloper.Location = new Point(270, 370);
         tbxAddDeveloper.Size = new Size(250, 30);
         Controls.Add(tbxAddDeveloper);
+
+        tbxAddGame = new TextBox();
+        tbxAddGame.Location = new Point(50, 370);
+        tbxAddGame.Size = new Size(210, 30);
+        Controls.Add(tbxAddGame);
     }
 
     private void LoadGames()
@@ -78,10 +109,12 @@ public class GUI : Form
     private void LoadDevelopers()
     {
         lbxDevelopers.Items.Clear();
+        cbxDevelopers.Items.Clear();
 
         foreach (Developer developer in businesslayer.GetDevelopers())
         {
             lbxDevelopers.Items.Add(developer.Name);
+            cbxDevelopers.Items.Add(developer.Name);
         }
     }
 
@@ -104,5 +137,29 @@ public class GUI : Form
 
         tbxAddDeveloper.Clear();
         LoadDevelopers();
+    }
+
+    private void btnAddGame_Click(object sender, System.EventArgs e)
+    {
+        if (cbxDevelopers.SelectedIndex == -1)
+        {
+            ShowErrorMessageBox("Please choose a developer!");
+            return;
+        }
+
+        try
+        {
+            businesslayer.AddGame(tbxAddGame.Text, cbxDevelopers.Text);
+        }
+        catch (Exception ex)
+        {
+            ShowErrorMessageBox(ex.Message);
+            return;
+        }
+
+        tbxAddGame.Clear();
+        cbxDevelopers.SelectedIndex = -1;
+        cbxDevelopers.Text = CBX_DEVELOPERS_DEFAULT_TEXT;
+        LoadGames();
     }
 }
