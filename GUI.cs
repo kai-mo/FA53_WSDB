@@ -15,8 +15,10 @@ public class GUI : Form
     public GUI(IBusinessLayer businesslayer)
     {
         this.businesslayer = businesslayer;
-        this.Text = "Games Manager";
+        this.FormBorderStyle = FormBorderStyle.Fixed3D;
+        this.MaximizeBox = false;
         this.Size = new Size(545, 500);
+        this.Text = "Games Manager";
 
         gbxGames = new GroupBox();
         gbxGames.Text = "Games";
