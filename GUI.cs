@@ -11,6 +11,7 @@ public class GUI : Form
     public GUI(IBusinessLayer businesslayer)
     {
         this.businesslayer = businesslayer;
+        this.Text = "Games Manager";
 
         gbxGames = new GroupBox();
         gbxGames.Text = "Games";
