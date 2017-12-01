@@ -85,14 +85,24 @@ public class GUI : Form
         }
     }
 
+    private void ShowErrorMessageBox(string message)
+    {
+        MessageBox.Show(this, message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
     private void btnAddDeveloper_Click(object sender, System.EventArgs e)
     {
-        if (tbxAddDeveloper.Text != "")
+        try
         {
             businesslayer.AddDeveloper(tbxAddDeveloper.Text);
-            tbxAddDeveloper.Clear();
+        }
+        catch (Exception ex)
+        {
+            ShowErrorMessageBox(ex.Message);
+            return;
         }
 
+        tbxAddDeveloper.Clear();
         LoadDevelopers();
     }
 }
