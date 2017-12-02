@@ -23,16 +23,19 @@ public class GUI : Form
     private TextBox tbxAddDeveloper;
     private TextBox tbxAddGame;
 
+    private TreeView tvwAssignments;
+
     public GUI(IBusinessLayer businesslayer)
     {
         this.businesslayer = businesslayer;
         this.FormBorderStyle = FormBorderStyle.Fixed3D;
         this.MaximizeBox = false;
-        this.Size = new Size(545, 500);
+        this.Size = new Size(545, 730);
         this.Text = "Games Manager";
 
         InitializeComponents();
 
+        LoadAssignments();
         LoadGames();
         LoadDevelopers();
     }
@@ -94,6 +97,27 @@ public class GUI : Form
         tbxAddGame.Location = new Point(50, 370);
         tbxAddGame.Size = new Size(210, 30);
         Controls.Add(tbxAddGame);
+
+        tvwAssignments = new TreeView();
+        tvwAssignments.Location = new Point(10, 470);
+        tvwAssignments.Size = new Size(510, 210);
+        Controls.Add(tvwAssignments);
+    }
+
+    private void LoadAssignments()
+    {
+        tvwAssignments.Nodes.Clear();
+
+        foreach(Developer developer in businesslayer.GetDevelopers())
+        {
+            TreeNode curr = new TreeNode(developer.Name);
+            tvwAssignments.Nodes.Add(curr);
+
+            foreach(Game game in developer.Games)
+            {
+                curr.Nodes.Add(new TreeNode(game.Name));
+            }
+        }
     }
 
     private void LoadGames()
@@ -136,6 +160,7 @@ public class GUI : Form
         }
 
         tbxAddDeveloper.Clear();
+        LoadAssignments();
         LoadDevelopers();
     }
 
@@ -160,6 +185,8 @@ public class GUI : Form
         tbxAddGame.Clear();
         cbxDevelopers.SelectedIndex = -1;
         cbxDevelopers.Text = CBX_DEVELOPERS_DEFAULT_TEXT;
+
+        LoadAssignments();
         LoadGames();
     }
 }
