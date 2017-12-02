@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 public class GUI : Form
 {
-    private IBusinessLayer businesslayer;
+    private IBusinessLayer businessLayer;
 
     private Button btnAddDeveloper;
     private Button btnAddGame;
@@ -25,9 +25,9 @@ public class GUI : Form
 
     private TreeView tvwAssignments;
 
-    public GUI(IBusinessLayer businesslayer)
+    public GUI(IBusinessLayer businessLayer)
     {
-        this.businesslayer = businesslayer;
+        this.businessLayer = businessLayer;
         this.FormBorderStyle = FormBorderStyle.Fixed3D;
         this.MaximizeBox = false;
         this.Size = new Size(545, 730);
@@ -108,7 +108,7 @@ public class GUI : Form
     {
         tvwAssignments.Nodes.Clear();
 
-        foreach(Developer developer in businesslayer.GetDevelopers())
+        foreach(Developer developer in businessLayer.GetDevelopers())
         {
             TreeNode curr = new TreeNode(developer.Name);
             tvwAssignments.Nodes.Add(curr);
@@ -124,7 +124,7 @@ public class GUI : Form
     {
         lbxGames.Items.Clear();
 
-        foreach (Game game in businesslayer.GetGames())
+        foreach (Game game in businessLayer.GetGames())
         {
             lbxGames.Items.Add(game.Name);
         }
@@ -135,7 +135,7 @@ public class GUI : Form
         lbxDevelopers.Items.Clear();
         cbxDevelopers.Items.Clear();
 
-        foreach (Developer developer in businesslayer.GetDevelopers())
+        foreach (Developer developer in businessLayer.GetDevelopers())
         {
             lbxDevelopers.Items.Add(developer.Name);
             cbxDevelopers.Items.Add(developer.Name);
@@ -151,7 +151,7 @@ public class GUI : Form
     {
         try
         {
-            businesslayer.AddDeveloper(tbxAddDeveloper.Text);
+            businessLayer.AddDeveloper(tbxAddDeveloper.Text);
         }
         catch (Exception ex)
         {
@@ -174,7 +174,7 @@ public class GUI : Form
 
         try
         {
-            businesslayer.AddGame(tbxAddGame.Text, cbxDevelopers.Text);
+            businessLayer.AddGame(tbxAddGame.Text, cbxDevelopers.Text);
         }
         catch (Exception ex)
         {
