@@ -13,7 +13,7 @@ public interface IBusinessLayer
 
     void DeleteGame(string name);
 
-    void DeleteDeveloper(string name);
+    void DeleteDeveloper(string name, bool force);
 
     List<Game> GetGames();
 

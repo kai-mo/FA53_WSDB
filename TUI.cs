@@ -208,7 +208,7 @@ Choose an option: ");
 			index = Int32.Parse(Console.ReadLine()) - 1;
 		} while(index >= developers.Count || index < 0);
 		
-		businesslayer.DeleteDeveloper(developers[index].Name);
+		businesslayer.DeleteDeveloper(developers[index].Name, true);
 		
 		ShowMenu();
 	}
@@ -245,7 +245,7 @@ Choose an option: ");
 		foreach(Developer developer in developers)
 		{
 			Console.WriteLine(developer.Name + ":");
-			
+
 			foreach(Game game in developer.Games)
 			{
                 Console.WriteLine("\t" + game.Name);
