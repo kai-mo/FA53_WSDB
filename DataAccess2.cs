@@ -17,14 +17,6 @@ public class DataAccess2 : IDataAccess
 
     public bool AddGame(string name, string developerName)
     {
-        if (name == "")
-        {
-            throw new Exception("Game name cannot be an empty string.");
-        }
-        if (developerName == "")
-        {
-            throw new Exception("Developer name cannot be an empty string.");
-        }
         Developer developer = null;
         foreach (var existingDeveloper in this.developers)
         {
@@ -55,10 +47,6 @@ public class DataAccess2 : IDataAccess
 
     public bool AddDeveloper(string name)
     {
-        if (name == "")
-        {
-            throw new Exception("Developer name cannot be an empty string.");
-        }
         Developer developer = new Developer(name);
         if (this.developers.Find(item => item.Name == name) == null)
         {
@@ -185,7 +173,10 @@ public class DataAccess2 : IDataAccess
             Formatting = Formatting.Indented
         };
         string json = JsonConvert.SerializeObject(this.developers, settings);
-        File.WriteAllText(this.filePath, json);
+        using (StreamWriter streamWriter = new StreamWriter(this.filePath))
+        {
+            streamWriter.Write(json);
+        }
     }
 
     public List<Developer> ReadFromJsonFile()
@@ -193,23 +184,24 @@ public class DataAccess2 : IDataAccess
         List<Developer> developers = new List<Developer>();
         if (!File.Exists(this.filePath))
         {
-            File.Create(this.filePath);
+            using (File.Create(this.filePath)) { };
         }
-
-        string json = File.ReadAllText(this.filePath);
-        try
+        using (StreamReader streamReader = new StreamReader(this.filePath))
         {
-            developers = JsonConvert.DeserializeObject<List<Developer>>(json);
-            if (developers == null)
+            string json = streamReader.ReadToEnd();
+            try
             {
-                developers = new List<Developer>();
+                developers = JsonConvert.DeserializeObject<List<Developer>>(json);
+                if (developers == null)
+                {
+                    developers = new List<Developer>();
+                }
+            }
+            catch (Exception)
+            {
+                throw new FileLoadException("Json seems not to be valid.");
             }
         }
-        catch (Exception)
-        {
-            throw new FileLoadException("Json seems not to be valid.");
-        }
-
         return developers;
     }
 
