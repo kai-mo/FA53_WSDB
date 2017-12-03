@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-// TODO check if excpeptions can be simplified
 public abstract class AbstractBusinessLayer : IBusinessLayer
 {
     protected IDataAccess dataAccess;
@@ -22,12 +21,6 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
         {
             throw new Exception("Developer name cannot be an empty string.");
         }
-        // TODO check in each interface if developer already exists
-        //if (!CheckIfDeveloperExists(developerName))
-        //{
-        //    AddDeveloper(developerName);
-        //}
-        // TODO check in each interface if game already exists
         this.dataAccess.AddGame(name, developerName);
     }
 
@@ -37,11 +30,6 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
         {
             throw new Exception("Developer name cannot be an empty string.");
         }
-        // TODO check in each interface if developer already exists
-        //if (CheckIfDeveloperExists(name))
-        //{
-        //    throw new Exception("Developer already exisits");
-        //}
         this.dataAccess.AddDeveloper(name);
     }
 
@@ -74,11 +62,24 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
 
     public void DeleteGame(string name)
     {
+        if (name.Equals(""))
+        {
+            throw new Exception("Game name cannot be an empty string.");
+        }
         this.dataAccess.DeleteGame(name);
     }
 
-    public void DeleteDeveloper(string name)
+    public void DeleteDeveloper(string name, bool force)
     {
+        if (name.Equals(""))
+        {
+            throw new Exception("Developer name cannot be an empty string.");
+        }
+        Developer developer = dataAccess.GetDeveloper(name);
+        if (!force && developer.Games.Count > 0)
+        {
+            throw new Exception("Developer still as games assigned.\nUse the force option to delete the developer and the assigned games.");
+        }
         this.dataAccess.DeleteDeveloper(name);
     }
 

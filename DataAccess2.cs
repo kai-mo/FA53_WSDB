@@ -20,15 +20,15 @@ public class DataAccess2 : IDataAccess
         Developer developer = null;
         foreach (var existingDeveloper in this.developers)
         {
-            if (developerName == existingDeveloper.Name)
+            if (developerName.Equals(existingDeveloper.Name))
             {
                 developer = existingDeveloper;
             }
             foreach (var game in existingDeveloper.Games)
             {
-                if (game.Name == name)
+                if (game.Name.Equals(name))
                 {
-                    throw new Exception(String.Format("Game already belongs to a developer: {0}", existingDeveloper.Name));
+                    throw new Exception("A game with this name already exists");
                 }
             }
         }
@@ -48,13 +48,13 @@ public class DataAccess2 : IDataAccess
     public bool AddDeveloper(string name)
     {
         Developer developer = new Developer(name);
-        if (this.developers.Find(item => item.Name == name) == null)
+        if (this.developers.Find(item => item.Name.Equals(name)) == null)
         {
             this.developers.Add(developer);
             WriteToJsonFile();
             return true;
         }
-        return false;
+        throw new Exception("A developer with this name already exists");
     }
 
     public bool EditGame(string newName, string oldName)
@@ -64,7 +64,11 @@ public class DataAccess2 : IDataAccess
             int index = 0;
             foreach (var developerGame in existingDeveloper.Games)
             {
-                if (developerGame.Name == oldName)
+                if (developerGame.Name.Equals(newName))
+                {
+                    throw new Exception("A game with this name already exists");
+                }
+                if (developerGame.Name.Equals(oldName))
                 {
                     existingDeveloper.Games[index].Name = newName;
                     WriteToJsonFile();
@@ -73,12 +77,16 @@ public class DataAccess2 : IDataAccess
                 index++;
             }
         }
-        throw new Exception("Game not found.");
+        return false;
     }
 
     public bool EditDeveloper(string newName, string oldName)
     {
-        Developer developerToEdit = this.developers.Find(item => item.Name == oldName);
+        if (this.developers.Find(item => item.Name.Equals(newName)) != null)
+        {
+            throw new Exception("A developer with this name already exists");
+        }
+        Developer developerToEdit = this.developers.Find(item => item.Name.Equals(oldName));
         if (developerToEdit != null)
         {
             int index = developers.IndexOf(developerToEdit);
@@ -91,7 +99,7 @@ public class DataAccess2 : IDataAccess
                 {
                     foreach (var developerGame in existingDeveloper.Games)
                     {
-                        if (oldName == developerGame.Name)
+                        if (oldName.Equals(developerGame.Name))
                         {
                             developerGame.Name = newName;
                         }
@@ -102,7 +110,7 @@ public class DataAccess2 : IDataAccess
             WriteToJsonFile();
             return true;
         }
-        throw new Exception("Developer not found.");
+        return false;
     }
 
     public bool DeleteGame(string name)
@@ -112,7 +120,7 @@ public class DataAccess2 : IDataAccess
             int index = 0;
             foreach (var developerGame in existingDeveloper.Games)
             {
-                if (name == developerGame.Name)
+                if (name.Equals(developerGame.Name))
                 {
                     existingDeveloper.Games.RemoveAt(index);
                     WriteToJsonFile();
@@ -121,12 +129,12 @@ public class DataAccess2 : IDataAccess
                 index++;
             }
         }
-        throw new Exception("Game not found.");
+        return false;
     }
 
     public bool DeleteDeveloper(string name)
     {
-        Developer developer = developers.Find(item => item.Name == name);
+        Developer developer = developers.Find(item => item.Name.Equals(name));
         if (developer != null)
         {
             developers.Remove(developer);
@@ -134,6 +142,16 @@ public class DataAccess2 : IDataAccess
             return true;
         }
         return false;
+    }
+
+    public Developer GetDeveloper(string name)
+    {
+        Developer developer = this.developers.Find(item => item.Name.Equals(name));
+        if (developer == null)
+        {
+            throw new Exception("Developer not found");
+        }
+        return developer;
     }
 
     public List<Game> GetGames()
@@ -160,6 +178,13 @@ public class DataAccess2 : IDataAccess
 
     public List<Developer> GetDevelopers()
     {
+        foreach (Developer developer in this.developers)
+        {
+            if (developer.Games.Equals(null))
+            {
+                developer.Games = new List<Game>();
+            }
+        }
         return this.developers;
     }
 
@@ -199,22 +224,9 @@ public class DataAccess2 : IDataAccess
             }
             catch (Exception)
             {
-                throw new FileLoadException("Json seems not to be valid.");
+                throw new FileLoadException("Json seems not to be valid");
             }
         }
         return developers;
     }
-
-    // TODO: Remove this legacy code later
-    //private int GetNextpossibleDeveloperID()
-    //{
-    //    int nextPossibleID = 1;
-    //    if (this.developers.Count > 0)
-    //    {
-    //        List<Developer> sortedList;
-    //        sortedList = this.developers.OrderBy(item => item.ID).ToList();
-    //        nextPossibleID = sortedList.Last().ID + 1;
-    //    }
-    //    return nextPossibleID;
-    //}
 }

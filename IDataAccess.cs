@@ -15,6 +15,8 @@ public interface IDataAccess
 
     bool DeleteDeveloper(string name);
 
+    Developer GetDeveloper(string name);
+
     List<Game> GetGames();
 
     List<Developer> GetDevelopers();

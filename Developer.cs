@@ -10,12 +10,14 @@ public class Developer
     public Developer(string name)
     {
         this.name = name;
+        this.games = new List<Game>();
     }
 
     public Developer(int id, string name)
     {
         this.id = id;
         this.name = name;
+        this.games = new List<Game>();
     }
 
     [JsonConstructor]
