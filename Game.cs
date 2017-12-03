@@ -4,7 +4,6 @@ public class Game
 {
     private int id;
     private string name;
-    //private Developer developer;
 
     [JsonConstructor]
     public Game(string name)
@@ -18,19 +17,6 @@ public class Game
         this.name = name;
     }
 
-    //public Game(string name, Developer developer)
-    //{
-    //    this.name = name;
-    //    this.developer = developer;
-    //}
-
-    //public Game(int id, string name, Developer developer)
-    //{
-    //    this.id = id;
-    //    this.name = name;
-    //    this.developer = developer;
-    //}
-
     public int Id
     {
         get { return this.id; }
@@ -42,10 +28,4 @@ public class Game
         get { return this.name; }
         set { this.name = value; }
     }
-
-    //public Developer Developer
-    //{
-    //    get { return this.developer; }
-    //    set { this.developer = value; }
-    //}
 }
