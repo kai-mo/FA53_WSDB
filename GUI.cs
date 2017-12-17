@@ -12,6 +12,9 @@ public class GUI : Form
     private ComboBox cbxDevelopers;
     private const string CBX_DEVELOPERS_DEFAULT_TEXT = "Choose Developer";
 
+    private ContextMenu ctmDevelopers;
+    private ContextMenu ctmGames;
+
     private GroupBox gbxGames;
     private GroupBox gbxDevelopers;
 
@@ -63,6 +66,19 @@ public class GUI : Form
         cbxDevelopers.Text = CBX_DEVELOPERS_DEFAULT_TEXT;
         Controls.Add(cbxDevelopers);
 
+        ctmDevelopers = new ContextMenu();
+        MenuItem mniDeleteDeveloper = new MenuItem("Delete");
+        MenuItem mniEditDeveloper = new MenuItem("Edit");
+        ctmDevelopers.MenuItems.Add(mniDeleteDeveloper);
+        ctmDevelopers.MenuItems.Add(mniEditDeveloper);
+
+        ctmGames = new ContextMenu();
+        MenuItem mniDeleteGame = new MenuItem("Delete");
+        MenuItem mniEditGame = new MenuItem("Edit");
+        ctmGames.MenuItems.Add(mniDeleteGame);
+        ctmGames.MenuItems.Add(mniEditGame);
+
+
         gbxGames = new GroupBox();
         gbxGames.Text = "Games";
         gbxGames.Location = new Point(10, 10);
@@ -89,10 +105,12 @@ public class GUI : Form
 
         lbxGames = new ListBox();
         lbxGames.Dock = DockStyle.Fill;
+        lbxGames.ContextMenu = ctmGames;
         gbxGames.Controls.Add(lbxGames);
 
         lbxDevelopers = new ListBox();
         lbxDevelopers.Dock = DockStyle.Fill;
+        lbxDevelopers.ContextMenu = ctmDevelopers;
         gbxDevelopers.Controls.Add(lbxDevelopers);
 
         tbxAddDeveloper = new TextBox();
