@@ -69,6 +69,7 @@ public class GUI : Form
         ctmDevelopers = new ContextMenu();
         MenuItem mniDeleteDeveloper = new MenuItem("Delete");
         MenuItem mniEditDeveloper = new MenuItem("Edit");
+        mniDeleteDeveloper.Click += new System.EventHandler(this.deleteDeveloper_Click);
         ctmDevelopers.MenuItems.Add(mniDeleteDeveloper);
         ctmDevelopers.MenuItems.Add(mniEditDeveloper);
 
@@ -212,6 +213,17 @@ public class GUI : Form
         cbxDevelopers.Text = CBX_DEVELOPERS_DEFAULT_TEXT;
 
         LoadAssignments();
+        LoadGames();
+    }
+
+    private void deleteDeveloper_Click(object sender, System.EventArgs e) {
+        if (lbxDevelopers.SelectedIndex == -1) {
+            return;
+        }
+
+        businessLayer.DeleteDeveloper(lbxDevelopers.SelectedItem.ToString(), true);
+        LoadAssignments();
+        LoadDevelopers();
         LoadGames();
     }
 }
