@@ -76,6 +76,7 @@ public class GUI : Form
         ctmGames = new ContextMenu();
         MenuItem mniDeleteGame = new MenuItem("Delete");
         MenuItem mniEditGame = new MenuItem("Edit");
+        mniDeleteGame.Click += new System.EventHandler(this.deleteGame_Click);
         ctmGames.MenuItems.Add(mniDeleteGame);
         ctmGames.MenuItems.Add(mniEditGame);
 
@@ -224,6 +225,16 @@ public class GUI : Form
         businessLayer.DeleteDeveloper(lbxDevelopers.SelectedItem.ToString(), true);
         LoadAssignments();
         LoadDevelopers();
+        LoadGames();
+    }
+
+    private void deleteGame_Click(object sender, System.EventArgs e) {
+        if (lbxGames.SelectedIndex == -1) {
+            return;
+        }
+
+        businessLayer.DeleteGame(lbxGames.SelectedItem.ToString());
+        LoadAssignments();
         LoadGames();
     }
 }
