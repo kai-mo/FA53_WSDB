@@ -70,6 +70,7 @@ public class GUI : Form
         MenuItem mniDeleteDeveloper = new MenuItem("Delete");
         MenuItem mniEditDeveloper = new MenuItem("Edit");
         mniDeleteDeveloper.Click += new System.EventHandler(this.deleteDeveloper_Click);
+        mniEditDeveloper.Click += new System.EventHandler(this.editDeveloper_Click);
         ctmDevelopers.MenuItems.Add(mniDeleteDeveloper);
         ctmDevelopers.MenuItems.Add(mniEditDeveloper);
 
@@ -229,6 +230,27 @@ public class GUI : Form
         LoadGames();
     }
 
+    private void editDeveloper_Click(object sender, System.EventArgs e) {
+        if (lbxDevelopers.SelectedIndex == -1) {
+            return;
+        }
+
+        string oldName = lbxDevelopers.SelectedItem.ToString();
+        EditDialog f = new EditDialog(oldName);
+
+        if (f.ShowDialog() == DialogResult.OK) {
+            try {
+                businessLayer.EditDeveloper(f.NewName, oldName);
+            } catch(Exception ex) {
+                ShowErrorMessageBox(ex.Message);
+                return;
+            }
+            LoadAssignments();
+            LoadDevelopers();
+            LoadGames();
+        }
+    }
+
     private void deleteGame_Click(object sender, System.EventArgs e) {
         if (lbxGames.SelectedIndex == -1) {
             return;
@@ -258,4 +280,5 @@ public class GUI : Form
             LoadAssignments();
         }
     }
+
 }
