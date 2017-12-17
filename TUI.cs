@@ -152,12 +152,12 @@ Choose an option: ");
 		do
 		{
 			Console.Write("\nChoose number of game: ");
-			index = Int32.Parse(Console.ReadLine()) - 1;
-		} while(index >= games.Count || index < 0);
+		} while(!Int32.TryParse(Console.ReadLine(), out index) ||
+				index > games.Count || index < 1);
 
 
-		Console.Write("Enter new name for '" + games[index].Name + "': ");
-        old_name = games[index].Name;
+		Console.Write("Enter new name for '" + games[index - 1].Name + "': ");
+        old_name = games[index - 1].Name;
         new_name = Console.ReadLine();
 
 		businesslayer.EditGame(new_name, old_name);
