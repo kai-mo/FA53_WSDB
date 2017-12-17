@@ -180,12 +180,12 @@ Choose an option: ");
 		do
 		{
 			Console.Write("\nChoose number of developer: ");
-			index = Int32.Parse(Console.ReadLine()) - 1;
-		} while(index >= developers.Count || index < 0);
+		} while(!Int32.TryParse(Console.ReadLine(), out index) ||
+		 		index > developers.Count || index < 1);
 
 
-		Console.Write("Enter new name for '" + developers[index].Name + "': ");
-        old_name = developers[index].Name;
+		Console.Write("Enter new name for '" + developers[index - 1].Name + "': ");
+        old_name = developers[index -1].Name;
         new_name = Console.ReadLine();
 
 		businesslayer.EditDeveloper(new_name, old_name);
