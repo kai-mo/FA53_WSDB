@@ -15,6 +15,7 @@ public class GUI : Form
     private GroupBox gbxGames;
     private GroupBox gbxDevelopers;
 
+    private Label lblAddDeveloper;
     private Label lblAddGame;
 
     private ListBox lbxGames;
@@ -74,6 +75,12 @@ public class GUI : Form
         gbxDevelopers.Size = new Size(250, 350);
         Controls.Add(gbxDevelopers);
 
+        lblAddDeveloper = new Label();
+        lblAddDeveloper.AutoSize = true;
+        lblAddDeveloper.Location = new Point(270, 370);
+        lblAddDeveloper.Text = "Name:";
+        Controls.Add(lblAddDeveloper);
+
         lblAddGame = new Label();
         lblAddGame.AutoSize = true;
         lblAddGame.Location = new Point(10, 370);
@@ -89,8 +96,8 @@ public class GUI : Form
         gbxDevelopers.Controls.Add(lbxDevelopers);
 
         tbxAddDeveloper = new TextBox();
-        tbxAddDeveloper.Location = new Point(270, 370);
-        tbxAddDeveloper.Size = new Size(250, 30);
+        tbxAddDeveloper.Location = new Point(310, 370);
+        tbxAddDeveloper.Size = new Size(210, 30);
         Controls.Add(tbxAddDeveloper);
 
         tbxAddGame = new TextBox();
