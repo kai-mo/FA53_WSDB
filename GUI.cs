@@ -77,6 +77,7 @@ public class GUI : Form
         MenuItem mniDeleteGame = new MenuItem("Delete");
         MenuItem mniEditGame = new MenuItem("Edit");
         mniDeleteGame.Click += new System.EventHandler(this.deleteGame_Click);
+        mniEditGame.Click += new System.EventHandler(this.editGame_Click);
         ctmGames.MenuItems.Add(mniDeleteGame);
         ctmGames.MenuItems.Add(mniEditGame);
 
@@ -236,5 +237,25 @@ public class GUI : Form
         businessLayer.DeleteGame(lbxGames.SelectedItem.ToString());
         LoadAssignments();
         LoadGames();
+    }
+
+    private void editGame_Click(object sender, System.EventArgs e) {
+        if ( lbxGames.SelectedIndex == -1) {
+            return;
+        }
+
+        string oldName = lbxGames.SelectedItem.ToString();
+        EditDialog f = new EditDialog(oldName);
+
+        if (f.ShowDialog() == DialogResult.OK) {
+            try {
+                businessLayer.EditGame(f.NewName, oldName);
+            } catch(Exception ex) {
+                ShowErrorMessageBox(ex.Message);
+                return;
+            }
+            LoadGames();
+            LoadAssignments();
+        }
     }
 }
