@@ -29,7 +29,6 @@ Edit Developer      (g)
 Delete Developer    (h)
 -----------------------
 Show Assignments    (i)
-Manage Assignments  (j)
 -----------------------
 Exit                (q)
 
