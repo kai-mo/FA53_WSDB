@@ -4,7 +4,7 @@ using System.Collections.Generic;
 ﻿public class TUI
 {
 	private IBusinessLayer businesslayer;
-	
+
     public TUI(IBusinessLayer businesslayer)
 	{
 		this.businesslayer = businesslayer;
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 	private void ShowMenu()
 	{
 		Console.Clear();
-		
+
 		Console.Write(
 @"GAMES MANAGER
 
@@ -48,8 +48,10 @@ Choose an option: ");
 			case "h": DeleteDeveloper(); break;
 			case "i": ShowAssignments(); break;
 			case "q": return;
-			default : ShowMenu(); break;
+			default : break;
 		}
+
+		ShowMenu();
 	}
 
     private void ShowAllGames()
@@ -63,8 +65,6 @@ Choose an option: ");
 
         Console.WriteLine("\nPress any key to return to menu...");
         Console.ReadKey();
-
-        ShowMenu();
     }
 
     private void ShowAllDevelopers()
@@ -78,13 +78,13 @@ Choose an option: ");
 
         Console.WriteLine("\nPress any key to return to menu...");
         Console.ReadKey();
-
-        ShowMenu();
     }
 
     private void AddGame()
     {
-        string new_game, developer_name = "";
+        string new_game, input;
+		int choice;
+		List<Developer> developers = businesslayer.GetDevelopers();
 
         do
         {
@@ -93,28 +93,36 @@ Choose an option: ");
             new_game = Console.ReadLine();
         } while (new_game.Equals(""));
 
-        if (!new_game.Equals("q"))
+        if (new_game.Equals("q")){
+			return;
+		}
+
+        do
         {
-            do
-            {
-                Console.Clear();
-                Console.Write(String.Format("Enter the name of the developer for game: {0} or q to abort: ", developer_name));
-                developer_name = Console.ReadLine();
-            } while (new_game.Equals(""));
+			int i = 1;
 
-            if (!developer_name.Equals("q"))
-            {
-                businesslayer.AddGame(new_game, developer_name);
-            }
-        }
+            Console.Clear();
+            Console.WriteLine("Choose developer:\n");
 
-        ShowMenu();
+			foreach (Developer developer in developers){
+				Console.WriteLine(i++ + ". " + developer.Name);
+			}
+
+			Console.Write("\nChoice [q to abort]: ");
+			input = Console.ReadLine();
+
+			if (input.Equals("q")) {
+				return;
+			}
+        } while (!Int32.TryParse(input, out choice) || choice < 1 || choice > developers.Count);
+
+        businesslayer.AddGame(new_game, developers[choice - 1].Name);
     }
-	
+
 	private void AddDeveloper()
 	{
 		string new_developer;
-		
+
         do
         {
             Console.Clear();
@@ -126,40 +134,36 @@ Choose an option: ");
         {
             businesslayer.AddDeveloper(new_developer);
         }
-
-        ShowMenu();
 	}
-	
+
 	private void EditGame()
 	{
 		List<Game> games = businesslayer.GetGames();
 		int index;
 		string new_name;
         string old_name;
-		
+
 		Console.Clear();
-		
+
 		for(int i = 1; i <= games.Count; i++)
 		{
 			Console.WriteLine(i.ToString() + ". " + games[i - 1].Name);
 		}
-		
+
 		do
 		{
 			Console.Write("\nChoose number of game: ");
 			index = Int32.Parse(Console.ReadLine()) - 1;
 		} while(index >= games.Count || index < 0);
-		
-		
+
+
 		Console.Write("Enter new name for '" + games[index].Name + "': ");
         old_name = games[index].Name;
         new_name = Console.ReadLine();
-		
+
 		businesslayer.EditGame(new_name, old_name);
-		
-		ShowMenu();
 	}
-	
+
 	private void EditDeveloper()
 	{
 		List<Developer> developers = businesslayer.GetDevelopers();
@@ -168,80 +172,74 @@ Choose an option: ");
         string old_name;
 
         Console.Clear();
-		
+
 		for(int i = 1; i <= developers.Count; i++)
 		{
 			Console.WriteLine(i.ToString() + ". " + developers[i - 1].Name);
 		}
-		
+
 		do
 		{
 			Console.Write("\nChoose number of developer: ");
 			index = Int32.Parse(Console.ReadLine()) - 1;
 		} while(index >= developers.Count || index < 0);
-		
-		
+
+
 		Console.Write("Enter new name for '" + developers[index].Name + "': ");
         old_name = developers[index].Name;
         new_name = Console.ReadLine();
-		
+
 		businesslayer.EditDeveloper(new_name, old_name);
-		
-		ShowMenu();
 	}
-	
+
 	private void DeleteDeveloper()
 	{
 		List<Developer> developers = businesslayer.GetDevelopers();
 		int index;
-		
+
 		Console.Clear();
-		
+
 		for(int i = 1; i <= developers.Count; i++)
 		{
 			Console.WriteLine(i.ToString() + ". " + developers[i - 1].Name);
 		}
-		
+
 		do
 		{
 			Console.Write("\nChoose number of developer: ");
 			index = Int32.Parse(Console.ReadLine()) - 1;
 		} while(index >= developers.Count || index < 0);
-		
+
 		businesslayer.DeleteDeveloper(developers[index].Name, true);
-		
-		ShowMenu();
 	}
-	
+
 	private void DeleteGame()
 	{
 		List<Game> games = businesslayer.GetGames();
 		int index;
-		
+
 		Console.Clear();
-		
+
 		for(int i = 1; i <= games.Count; i++)
 		{
 			Console.WriteLine(i.ToString() + ". " + games[i - 1].Name);
 		}
-		
+
 		do
 		{
 			Console.Write("\nChoose number of game: ");
 			index = Int32.Parse(Console.ReadLine()) - 1;
 		} while(index >= games.Count || index < 0);
-		
+
 		businesslayer.DeleteGame(games[index].Name);
-		
-		ShowMenu();
 	}
-	
+
 	private void ShowAssignments()
 	{
 		List<Developer> developers = businesslayer.GetDevelopers();
-	
+
 		Console.Clear();
-	
+
 		foreach(Developer developer in developers)
 		{
 			Console.WriteLine(developer.Name + ":");
@@ -250,13 +248,11 @@ Choose an option: ");
 			{
                 Console.WriteLine("\t" + game.Name);
             }
-			
+
 			Console.WriteLine();
 		}
-		
+
 		Console.WriteLine("\nPress any key to return to menu...");
         Console.ReadKey();
-		
-		ShowMenu();
 	}
 }
