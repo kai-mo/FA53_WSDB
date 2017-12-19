@@ -43,7 +43,10 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
         {
             throw new Exception("Old game name cannot be an empty string.");
         }
-        this.dataAccess.EditGame(newName, oldName);
+        if (!newName.Equals(oldName))
+        {
+            this.dataAccess.EditGame(newName, oldName);
+        }
     }
 
     public void EditDeveloper(string newName, string oldName)
@@ -57,7 +60,10 @@ public abstract class AbstractBusinessLayer : IBusinessLayer
         {
             throw new Exception("Old developer name cannot be an empty string.");
         }
-        this.dataAccess.EditDeveloper(newName, oldName);
+        if (!newName.Equals(oldName))
+        {
+            this.dataAccess.EditDeveloper(newName, oldName);
+        }
     }
 
     public void DeleteGame(string name)
