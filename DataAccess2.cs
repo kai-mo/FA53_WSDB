@@ -18,12 +18,14 @@ namespace GamesManager
         public bool AddGame(string name, string developerName)
         {
             Developer developer = null;
+
             foreach (var existingDeveloper in this.developers)
             {
                 if (developerName.Equals(existingDeveloper.Name))
                 {
                     developer = existingDeveloper;
                 }
+
                 foreach (var game in existingDeveloper.Games)
                 {
                     if (game.Name.Equals(name))
@@ -34,26 +36,32 @@ namespace GamesManager
             }
 
             Game newGame = new Game(name);
+
             if (developer != null)
             {
                 developer.Games.Add(newGame);
                 WriteToJsonFile();
                 return true;
             }
+
             this.developers.Add(new Developer(developerName, new List<Game> { newGame }));
             WriteToJsonFile();
+
             return true;
         }
 
         public bool AddDeveloper(string name)
         {
             Developer developer = new Developer(name);
+
             if (this.developers.Find(item => item.Name.Equals(name)) == null)
             {
                 this.developers.Add(developer);
                 WriteToJsonFile();
+
                 return true;
             }
+
             throw new Exception("A developer with this name already exists");
         }
 
@@ -62,18 +70,22 @@ namespace GamesManager
             foreach (var existingDeveloper in this.developers)
             {
                 int index = 0;
+
                 foreach (var developerGame in existingDeveloper.Games)
                 {
                     if (developerGame.Name.Equals(newName))
                     {
                         throw new Exception("A game with this name already exists");
                     }
+
                     if (developerGame.Name.Equals(oldName))
                     {
                         existingDeveloper.Games[index].Name = newName;
                         WriteToJsonFile();
+
                         return true;
                     }
+
                     index++;
                 }
             }
@@ -86,7 +98,9 @@ namespace GamesManager
             {
                 throw new Exception("A developer with this name already exists");
             }
+
             Developer developerToEdit = this.developers.Find(item => item.Name.Equals(oldName));
+
             if (developerToEdit != null)
             {
                 int index = developers.IndexOf(developerToEdit);
@@ -108,8 +122,10 @@ namespace GamesManager
                 }
 
                 WriteToJsonFile();
+
                 return true;
             }
+
             return false;
         }
 
@@ -118,61 +134,65 @@ namespace GamesManager
             foreach (var existingDeveloper in this.developers)
             {
                 int index = 0;
+
                 foreach (var developerGame in existingDeveloper.Games)
                 {
                     if (name.Equals(developerGame.Name))
                     {
                         existingDeveloper.Games.RemoveAt(index);
                         WriteToJsonFile();
+
                         return true;
                     }
                     index++;
                 }
             }
+
             return false;
         }
 
         public bool DeleteDeveloper(string name)
         {
             Developer developer = developers.Find(item => item.Name.Equals(name));
+
             if (developer != null)
             {
                 developers.Remove(developer);
                 WriteToJsonFile();
+
                 return true;
             }
+
             return false;
         }
 
         public Developer GetDeveloper(string name)
         {
             Developer developer = this.developers.Find(item => item.Name.Equals(name));
+
             if (developer == null)
             {
                 throw new Exception("Developer not found");
             }
+
             return developer;
         }
 
         public List<Game> GetGames()
         {
             List<Game> games = new List<Game>();
-            if (developers.Count > 0)
+
+            foreach (var developer in developers)
             {
-                foreach (var developer in developers)
+                foreach (var game in developer.Games)
                 {
-                    if (developer.Games.Count > 0)
+                    if (!games.Contains(game))
                     {
-                        foreach (var game in developer.Games)
-                        {
-                            if (!games.Contains(game))
-                            {
-                                games.Add(game);
-                            }
-                        }
+                        games.Add(game);
                     }
                 }
             }
+
             return games;
         }
 
@@ -185,6 +205,7 @@ namespace GamesManager
                     developer.Games = new List<Game>();
                 }
             }
+
             return this.developers;
         }
 
@@ -197,7 +218,9 @@ namespace GamesManager
                 // save code indented for better testing
                 Formatting = Formatting.Indented
             };
+
             string json = JsonConvert.SerializeObject(this.developers, settings);
+
             using (StreamWriter streamWriter = new StreamWriter(this.filePath))
             {
                 streamWriter.Write(json);
@@ -207,26 +230,32 @@ namespace GamesManager
         public List<Developer> ReadFromJsonFile()
         {
             List<Developer> developers = new List<Developer>();
+
             if (!File.Exists(this.filePath))
             {
                 using (File.Create(this.filePath)) { };
             }
+
             using (StreamReader streamReader = new StreamReader(this.filePath))
             {
                 string json = streamReader.ReadToEnd();
+
                 try
                 {
                     developers = JsonConvert.DeserializeObject<List<Developer>>(json);
+
                     if (developers == null)
                     {
                         developers = new List<Developer>();
                     }
                 }
+
                 catch (Exception)
                 {
                     throw new FileLoadException("Json seems not to be valid");
                 }
             }
+
             return developers;
         }
     }
