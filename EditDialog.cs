@@ -45,16 +45,19 @@ public class EditDialog : Form
         Controls.Add(tbxNewName);
     }
 
-    public string NewName {
+    public string NewName
+    {
         get { return this.tbxNewName.Text; }
     }
 
-    public void btnOK_Click(object sender, EventArgs e) {
+    public void btnOK_Click(object sender, EventArgs e)
+    {
         this.DialogResult = DialogResult.OK;
         this.Close();
     }
 
-    public void btnCancel_Click(object sender, EventArgs e) {
+    public void btnCancel_Click(object sender, EventArgs e)
+    {
         this.DialogResult = DialogResult.Cancel;
         this.Close();
     }
