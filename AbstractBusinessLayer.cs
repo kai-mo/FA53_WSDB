@@ -19,10 +19,12 @@ namespace GamesManager
             {
                 throw new Exception("Game name cannot be an empty string.");
             }
+
             if (developerName.Equals(""))
             {
                 throw new Exception("Developer name cannot be an empty string.");
             }
+
             this.dataAccess.AddGame(name, developerName);
         }
 
@@ -32,6 +34,7 @@ namespace GamesManager
             {
                 throw new Exception("Developer name cannot be an empty string.");
             }
+
             this.dataAccess.AddDeveloper(name);
         }
 
@@ -41,10 +44,12 @@ namespace GamesManager
             {
                 throw new Exception("Game name cannot be an empty string.");
             }
+
             if (oldName.Equals(""))
             {
                 throw new Exception("Old game name cannot be an empty string.");
             }
+
             if (!newName.Equals(oldName))
             {
                 this.dataAccess.EditGame(newName, oldName);
@@ -53,15 +58,16 @@ namespace GamesManager
 
         public void EditDeveloper(string newName, string oldName)
         {
-
             if (newName.Equals(""))
             {
                 throw new Exception("Developer name cannot be an empty string.");
             }
+
             if (oldName.Equals(""))
             {
                 throw new Exception("Old developer name cannot be an empty string.");
             }
+
             if (!newName.Equals(oldName))
             {
                 this.dataAccess.EditDeveloper(newName, oldName);
@@ -74,6 +80,7 @@ namespace GamesManager
             {
                 throw new Exception("Game name cannot be an empty string.");
             }
+
             this.dataAccess.DeleteGame(name);
         }
 
@@ -83,11 +90,16 @@ namespace GamesManager
             {
                 throw new Exception("Developer name cannot be an empty string.");
             }
+
             Developer developer = dataAccess.GetDeveloper(name);
+
             if (!force && developer.Games.Count > 0)
             {
-                throw new Exception("Developer still as games assigned.\nUse the force option to delete the developer and the assigned games.");
+                throw new Exception("Developer still as games assigned.\n" +
+                                    "Use the force option to delete the developer" +
+                                    " and the assigned games.");
             }
+
             this.dataAccess.DeleteDeveloper(name);
         }
 
@@ -98,7 +110,8 @@ namespace GamesManager
         public List<Game> SortGamesList(List<Game> list, string order)
         {
             List<Game> sortedList;
-            if (order == "DESC")
+
+            if (order.Equals("DESC"))
             {
                 sortedList = list.OrderByDescending(item => item.Name).ToList();
             }
@@ -106,12 +119,14 @@ namespace GamesManager
             {
                 sortedList = list.OrderBy(item => item.Name).ToList();
             }
+
             return sortedList;
         }
 
         public List<Developer> SortDevelopersList(List<Developer> list, string order)
         {
             List<Developer> sortedList;
+
             if (order == "DESC")
             {
                 sortedList = list.OrderByDescending(item => item.Name).ToList();
@@ -120,6 +135,7 @@ namespace GamesManager
             {
                 sortedList = list.OrderBy(item => item.Name).ToList();
             }
+
             return sortedList;
         }
     }
