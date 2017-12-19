@@ -36,6 +36,7 @@ public class GUI : Form
         this.MaximizeBox = false;
         this.Size = new Size(545, 730);
         this.Text = "Games Manager";
+        this.StartPosition = FormStartPosition.CenterScreen;
 
         InitializeComponents();
 
