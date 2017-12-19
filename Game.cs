@@ -1,31 +1,34 @@
 ﻿using Newtonsoft.Json;
 
-public class Game
+namespace GamesManager
 {
-    private int id;
-    private string name;
-
-    [JsonConstructor]
-    public Game(string name)
+    public class Game
     {
-        this.name = name;
-    }
+        private int id;
+        private string name;
 
-    public Game(int id, string name)
-    {
-        this.id = id;
-        this.name = name;
-    }
+        [JsonConstructor]
+        public Game(string name)
+        {
+            this.name = name;
+        }
 
-    public int Id
-    {
-        get { return this.id; }
-        set { this.id = value; }
-    }
+        public Game(int id, string name)
+        {
+            this.id = id;
+            this.name = name;
+        }
 
-    public string Name
-    {
-        get { return this.name; }
-        set { this.name = value; }
+        public int Id
+        {
+            get { return this.id; }
+            set { this.id = value; }
+        }
+
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
     }
 }

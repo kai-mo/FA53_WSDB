@@ -1,54 +1,57 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-public class Developer
+namespace GamesManager
 {
-    private int id;
-    private string name;
-    private List<Game> games;
-
-    public Developer(string name)
+    public class Developer
     {
-        this.name = name;
-        this.games = new List<Game>();
-    }
+        private int id;
+        private string name;
+        private List<Game> games;
 
-    public Developer(int id, string name)
-    {
-        this.id = id;
-        this.name = name;
-        this.games = new List<Game>();
-    }
+        public Developer(string name)
+        {
+            this.name = name;
+            this.games = new List<Game>();
+        }
 
-    [JsonConstructor]
-    public Developer(string name, List<Game> games)
-    {
-        this.name = name;
-        this.games = games;
-    }
+        public Developer(int id, string name)
+        {
+            this.id = id;
+            this.name = name;
+            this.games = new List<Game>();
+        }
 
-    public Developer(int id, string name, List<Game> games)
-    {
-        this.id = id;
-        this.name = name;
-        this.games = games;
-    }
+        [JsonConstructor]
+        public Developer(string name, List<Game> games)
+        {
+            this.name = name;
+            this.games = games;
+        }
 
-    public int Id
-    {
-        get { return this.id; }
-        set { this.id = value; }
-    }
+        public Developer(int id, string name, List<Game> games)
+        {
+            this.id = id;
+            this.name = name;
+            this.games = games;
+        }
 
-    public string Name
-    {
-        get { return this.name; }
-        set { this.name = value; }
-    }
+        public int Id
+        {
+            get { return this.id; }
+            set { this.id = value; }
+        }
 
-    public List<Game> Games
-    {
-        get { return this.games; }
-        set { this.games = value; }
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
+
+        public List<Game> Games
+        {
+            get { return this.games; }
+            set { this.games = value; }
+        }
     }
 }

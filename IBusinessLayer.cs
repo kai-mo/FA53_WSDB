@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public interface IBusinessLayer
+namespace GamesManager
 {
-    void AddGame(string name, string developerName);
+    public interface IBusinessLayer
+    {
+        void AddGame(string name, string developerName);
 
-    void AddDeveloper(string name);
+        void AddDeveloper(string name);
 
-    void EditGame(string newName, string oldName);
+        void EditGame(string newName, string oldName);
 
-    void EditDeveloper(string newName, string oldName);
+        void EditDeveloper(string newName, string oldName);
 
-    void DeleteGame(string name);
+        void DeleteGame(string name);
 
-    void DeleteDeveloper(string name, bool force);
+        void DeleteDeveloper(string name, bool force);
 
-    List<Game> GetGames();
+        List<Game> GetGames();
 
-    List<Developer> GetDevelopers();
+        List<Developer> GetDevelopers();
+    }
 }

@@ -3,105 +3,108 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 
-
-static class DataAcess1TestingData
+namespace GamesManager
 {
-    static public void InsertTestingData()
+    static class DataAcess1TestingData
     {
-        using (SQLiteConnection databaseConnection = GetDatabaseConnection())
+        static public void InsertTestingData()
         {
-            databaseConnection.Open();
-            if (CheckIfTableIsEmpty("games") || CheckIfTableIsEmpty("developers"))
+            using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
-                if (CheckIfTableIsEmpty("games"))
+                databaseConnection.Open();
+                if (CheckIfTableIsEmpty("games") || CheckIfTableIsEmpty("developers"))
                 {
-                    List<string> gameCommands = GetTestingGamesCommands();
-                    foreach (var gameCommand in gameCommands)
+                    if (CheckIfTableIsEmpty("games"))
                     {
-                        using(SQLiteCommand command = new SQLiteCommand())
+                        List<string> gameCommands = GetTestingGamesCommands();
+                        foreach (var gameCommand in gameCommands)
                         {
-                            command.CommandText = gameCommand;
-                            command.Connection = databaseConnection;
-                            command.ExecuteNonQuery();
+                            using (SQLiteCommand command = new SQLiteCommand())
+                            {
+                                command.CommandText = gameCommand;
+                                command.Connection = databaseConnection;
+                                command.ExecuteNonQuery();
+                            }
                         }
                     }
-                }
 
-                if (CheckIfTableIsEmpty("developers"))
-                {
-                    List<string> developerCommands = GetTestingDevelopersCommands();
-                    foreach (var developerCommand in developerCommands)
+                    if (CheckIfTableIsEmpty("developers"))
                     {
-                        using (SQLiteCommand command = new SQLiteCommand())
+                        List<string> developerCommands = GetTestingDevelopersCommands();
+                        foreach (var developerCommand in developerCommands)
                         {
-                            command.CommandText = developerCommand;
-                            command.Connection = databaseConnection;
-                            command.ExecuteNonQuery();
+                            using (SQLiteCommand command = new SQLiteCommand())
+                            {
+                                command.CommandText = developerCommand;
+                                command.Connection = databaseConnection;
+                                command.ExecuteNonQuery();
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    static private bool CheckIfTableIsEmpty(string tableName)
-    {
-        int count = 0;
-        using (SQLiteConnection databaseConnection = GetDatabaseConnection())
+        static private bool CheckIfTableIsEmpty(string tableName)
         {
-            databaseConnection.Open();
-            using(SQLiteCommand command = new SQLiteCommand())
+            int count = 0;
+            using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
-                // TODO implement a solution that is more secure
-                command.CommandText = "SELECT COUNT(*) FROM " + Convert.ToString(tableName);
-                command.Connection = databaseConnection;
-                count = Convert.ToInt32(command.ExecuteScalar());
-                return (count == 0);
+                databaseConnection.Open();
+                using (SQLiteCommand command = new SQLiteCommand())
+                {
+                    // TODO implement a solution that is more secure
+                    command.CommandText = "SELECT COUNT(*) FROM " + Convert.ToString(tableName);
+                    command.Connection = databaseConnection;
+                    count = Convert.ToInt32(command.ExecuteScalar());
+                    return (count == 0);
+                }
             }
         }
-    }
 
-    static private List<string> GetTestingGamesCommands()
-    {
-        List<string> commands = new List<string>()
+        static private List<string> GetTestingGamesCommands()
+        {
+            List<string> commands = new List<string>()
             {
                 "INSERT INTO games (name, developer) VALUES ('The Witcher 1', 1)",
                 "INSERT INTO games(name, developer) VALUES('The Witcher 2', 1)",
                 "INSERT INTO games(name, developer) VALUES('The Witcher 3', 1)",
                 "INSERT INTO games(name, developer) VALUES('The Last of US', 2)",
-                "INSERT INTO games(name) VALUES('Uncharted 1')",
-                "INSERT INTO games(name) VALUES('Uncharted 2')",
-                "INSERT INTO games(name) VALUES('Uncharted 3')",
-                "INSERT INTO games(name) VALUES('Uncharted 4')",
-                "INSERT INTO games(name) VALUES('Titan Quest')",
-                "INSERT INTO games(name) VALUES('StarCraft 2')",
-                "INSERT INTO games(name) VALUES('Batman: Arkham Asylum')",
-                "INSERT INTO games(name) VALUES('Batman: Arkham Knight')"
+                "INSERT INTO games(name, developer) VALUES('Uncharted 1', 2)",
+                "INSERT INTO games(name, developer) VALUES('Uncharted 2', 2)",
+                "INSERT INTO games(name, developer) VALUES('Uncharted 3', 2)",
+                "INSERT INTO games(name, developer) VALUES('Uncharted 4', 2)",
+                "INSERT INTO games(name, developer) VALUES('Titan Quest', 5)",
+                "INSERT INTO games(name, developer) VALUES('StarCraft 2', 3)",
+                "INSERT INTO games(name, developer) VALUES('Batman: Arkham Asylum', 4)",
+                "INSERT INTO games(name, developer) VALUES('Batman: Arkham Knight', 4)"
             };
-        return commands;
-    }
+            return commands;
+        }
 
-    static private List<string> GetTestingDevelopersCommands()
-    {
-        List<string> commands = new List<string>()
+        static private List<string> GetTestingDevelopersCommands()
+        {
+            List<string> commands = new List<string>()
             {
                 "INSERT INTO developers (name) VALUES ('CD Project Red')",
                 "INSERT INTO developers(name) VALUES('Naughty Dog')",
                 "INSERT INTO developers(name) VALUES('Blizzard')",
                 "INSERT INTO developers(name) VALUES('Rocksteady Studios');",
+                "INSERT INTO developers(name) VALUES('Iron Lore Entertainment');"
             };
-        return commands;
-    }
-
-    static private SQLiteConnection GetDatabaseConnection()
-    {
-        string fileName = @"GamesManager.sqlite";
-        SQLiteConnection.ClearAllPools();
-        if (!File.Exists(fileName))
-        {
-            SQLiteConnection.CreateFile(fileName);
+            return commands;
         }
-        SQLiteConnection databaseConnection = new SQLiteConnection("Data Source=GamesManager.sqlite;Version=3;");
-        return databaseConnection;
+
+        static private SQLiteConnection GetDatabaseConnection()
+        {
+            string fileName = @"GamesManager.sqlite";
+            SQLiteConnection.ClearAllPools();
+            if (!File.Exists(fileName))
+            {
+                SQLiteConnection.CreateFile(fileName);
+            }
+            SQLiteConnection databaseConnection = new SQLiteConnection("Data Source=GamesManager.sqlite;Version=3;");
+            return databaseConnection;
+        }
     }
 }

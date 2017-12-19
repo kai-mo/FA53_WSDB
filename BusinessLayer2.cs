@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public class BusinessLayer2 : AbstractBusinessLayer
+namespace GamesManager
 {
-    public BusinessLayer2(IDataAccess dataAccess) : base(dataAccess)
-    { }
-
-    public override List<Game> GetGames()
+    public class BusinessLayer2 : AbstractBusinessLayer
     {
-        var games = this.dataAccess.GetGames();
-        return this.SortGamesList(games, "DESC");
+        public BusinessLayer2(IDataAccess dataAccess) : base(dataAccess)
+        { }
+
+        public override List<Game> GetGames()
+        {
+            var games = this.dataAccess.GetGames();
+            return this.SortGamesList(games, "DESC");
+        }
+
+        public override List<Developer> GetDevelopers()
+        {
+            var developers = this.dataAccess.GetDevelopers();
+            return this.SortDevelopersList(developers, "DESC");
+        }
     }
 
-    public override List<Developer> GetDevelopers()
-    {
-        var developers = this.dataAccess.GetDevelopers();
-        return this.SortDevelopersList(developers, "DESC");
-    }
 }
