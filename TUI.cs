@@ -144,9 +144,20 @@ Choose an option: ");
                 new_developer = Console.ReadLine();
             } while (new_developer.Equals(""));
 
-            if (!new_developer.Equals("q"))
+            if (new_developer.Equals("q"))
+            {
+                return;
+            }
+
+            try
             {
                 businesslayer.AddDeveloper(new_developer);
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine("\n" + exp.Message);
+                Console.WriteLine("\nPress any key to return to main menu...");
+                Console.ReadKey();
             }
         }
 
