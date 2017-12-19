@@ -17,11 +17,14 @@ namespace GamesManager
         {
             string fileName = @"GamesManager.sqlite";
             SQLiteConnection.ClearAllPools();
+
             if (!File.Exists(fileName))
             {
                 SQLiteConnection.CreateFile(fileName);
             }
+
             SQLiteConnection databaseConnection = new SQLiteConnection("Data Source=GamesManager.sqlite;Version=3;");
+
             return databaseConnection;
         }
 
@@ -30,38 +33,44 @@ namespace GamesManager
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "CREATE TABLE IF NOT EXISTS games (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL DEFAULT '', developer INTEGER NOT NULL DEFAULT 0)";
                     command.Connection = databaseConnection;
                     command.ExecuteNonQuery();
                 }
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
-                    command.CommandText = "CREATE TABLE  IF NOT EXISTS developers (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL DEFAULT '')";
+                    command.CommandText = "CREATE TABLE IF NOT EXISTS developers (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL DEFAULT '')";
                     command.Connection = databaseConnection;
                     command.ExecuteNonQuery();
                 }
             }
-
         }
 
         public bool AddGame(string name, string developerName)
         {
             int rowsAffected = 0;
+
             if (CheckIfGameExists(name))
             {
                 throw new Exception("A game with this name already exists");
             }
+
             if (!CheckIfDeveloperExists(developerName))
             {
                 AddDeveloper(developerName);
             }
+
             Developer developer = GetDeveloper(developerName);
             int developerId = developer.Id;
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "INSERT INTO games(name, developer) VALUES(@name, @developerId)";
@@ -71,19 +80,23 @@ namespace GamesManager
                     rowsAffected += command.ExecuteNonQuery();
                 }
             }
+
             return (rowsAffected > 0);
         }
 
         public bool AddDeveloper(string name)
         {
             int rowsAffected = 0;
+
             if (CheckIfDeveloperExists(name))
             {
                 throw new Exception("A developer with this name already exists");
             }
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "INSERT INTO developers(name) VALUES(@name)";
@@ -92,19 +105,23 @@ namespace GamesManager
                     rowsAffected += command.ExecuteNonQuery();
                 }
             }
+
             return (rowsAffected > 0);
         }
 
         public bool EditGame(string newName, string oldName)
         {
             int rowsAffected = 0;
+
             if (CheckIfGameExists(newName))
             {
                 throw new Exception("A game with this name already exists");
             }
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "UPDATE games SET name = @newName WHERE name = @oldName";
@@ -114,19 +131,23 @@ namespace GamesManager
                     rowsAffected += command.ExecuteNonQuery();
                 }
             }
+
             return (rowsAffected > 0);
         }
 
         public bool EditDeveloper(string newName, string oldName)
         {
             int rowsAffected = 0;
+
             if (CheckIfDeveloperExists(newName))
             {
                 throw new Exception("A developer with this name already exists");
             }
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "UPDATE developers SET name = @newName WHERE name = @oldName";
@@ -136,15 +157,18 @@ namespace GamesManager
                     rowsAffected += command.ExecuteNonQuery();
                 }
             }
+
             return (rowsAffected > 0);
         }
 
         public bool DeleteGame(string name)
         {
             int rowsAffected = 0;
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "DELETE FROM games WHERE name = @name";
@@ -153,6 +177,7 @@ namespace GamesManager
                     rowsAffected += command.ExecuteNonQuery();
                 }
             }
+
             return (rowsAffected > 0);
         }
 
@@ -160,9 +185,11 @@ namespace GamesManager
         {
             int rowsAffected = 0;
             DeleteDeveloperGames(name);
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "DELETE FROM developers WHERE name = @name";
@@ -171,20 +198,24 @@ namespace GamesManager
                     rowsAffected += command.ExecuteNonQuery();
                 }
             }
+
             return (rowsAffected > 0);
         }
 
         public Developer GetDeveloper(int id)
         {
             Developer developer;
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "SELECT * FROM developers WHERE id = @id";
                     command.Connection = databaseConnection;
                     command.Parameters.AddWithValue("@id", id);
+
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -194,12 +225,15 @@ namespace GamesManager
                             developer = new Developer(id, name);
 
                             List<Game> games = GetDeveloperGames(id);
+
                             if (games.Count > 0)
                             {
                                 developer.Games = games;
                             }
+
                             return new Developer(id, name);
                         }
+
                         throw new Exception("Developer not found");
                     }
                 }
@@ -209,14 +243,17 @@ namespace GamesManager
         public Developer GetDeveloper(string name)
         {
             Developer developer;
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "SELECT * FROM developers WHERE name = @name";
                     command.Connection = databaseConnection;
                     command.Parameters.AddWithValue("@name", name);
+
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -226,12 +263,15 @@ namespace GamesManager
                             developer = new Developer(id, name);
 
                             List<Game> games = GetDeveloperGames(id);
+
                             if (games.Count > 0)
                             {
                                 developer.Games = games;
                             }
+
                             return new Developer(id, name);
                         }
+
                         throw new Exception("Developer not found");
                     }
                 }
@@ -241,13 +281,16 @@ namespace GamesManager
         public List<Game> GetGames()
         {
             List<Game> games = new List<Game>();
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "SELECT * FROM games";
                     command.Connection = databaseConnection;
+
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -260,19 +303,23 @@ namespace GamesManager
                     }
                 }
             }
+
             return games;
         }
 
         public List<Developer> GetDevelopers()
         {
             List<Developer> developers = new List<Developer>();
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "SELECT * FROM developers";
                     command.Connection = databaseConnection;
+
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -287,15 +334,18 @@ namespace GamesManager
                     }
                 }
             }
+
             return developers;
         }
 
         private bool DeleteDeveloperGames(string name)
         {
             int rowsAffected = 0;
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "DELETE FROM games WHERE developer = (SELECT id FROM developers WHERE name = @name)";
@@ -304,15 +354,18 @@ namespace GamesManager
                     rowsAffected += command.ExecuteNonQuery();
                 }
             }
+
             return (rowsAffected > 0);
         }
 
         private bool CheckIfGameExists(string name)
         {
             int count = 0;
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "SELECT COUNT(*) FROM games WHERE name = @name";
@@ -321,15 +374,18 @@ namespace GamesManager
                     count = Convert.ToInt32(command.ExecuteScalar());
                 }
             }
+
             return (count > 0);
         }
 
         private bool CheckIfDeveloperExists(string name)
         {
             int count = 0;
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "SELECT COUNT(*) FROM developers WHERE name = @name";
@@ -338,20 +394,24 @@ namespace GamesManager
                     count = Convert.ToInt32(command.ExecuteScalar());
                 }
             }
+
             return (count > 0);
         }
 
         private List<Game> GetDeveloperGames(int developerId)
         {
             List<Game> games = new List<Game>();
+
             using (SQLiteConnection databaseConnection = GetDatabaseConnection())
             {
                 databaseConnection.Open();
+
                 using (SQLiteCommand command = new SQLiteCommand())
                 {
                     command.CommandText = "SELECT * FROM games WHERE developer = @developerId";
                     command.Connection = databaseConnection;
                     command.Parameters.AddWithValue("@developerId", developerId);
+
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -364,6 +424,7 @@ namespace GamesManager
                     }
                 }
             }
+
             return games;
         }
     }
