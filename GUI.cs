@@ -36,6 +36,7 @@ public class GUI : Form
         this.MaximizeBox = false;
         this.Size = new Size(545, 730);
         this.Text = "Games Manager";
+        this.StartPosition = FormStartPosition.CenterScreen;
 
         InitializeComponents();
 
@@ -237,6 +238,7 @@ public class GUI : Form
 
         string oldName = lbxDevelopers.SelectedItem.ToString();
         EditDialog f = new EditDialog(oldName);
+        f.StartPosition = FormStartPosition.CenterScreen;
 
         if (f.ShowDialog() == DialogResult.OK) {
             try {
@@ -268,6 +270,7 @@ public class GUI : Form
 
         string oldName = lbxGames.SelectedItem.ToString();
         EditDialog f = new EditDialog(oldName);
+        f.StartPosition = FormStartPosition.CenterScreen;
 
         if (f.ShowDialog() == DialogResult.OK) {
             try {
