@@ -230,6 +230,7 @@ namespace GamesManager
             }
 
             businessLayer.DeleteDeveloper(lbxDevelopers.SelectedItem.ToString(), true);
+
             LoadAssignments();
             LoadDevelopers();
             LoadGames();
@@ -257,6 +258,7 @@ namespace GamesManager
                     ShowErrorMessageBox(ex.Message);
                     return;
                 }
+
                 LoadAssignments();
                 LoadDevelopers();
                 LoadGames();
@@ -297,6 +299,7 @@ namespace GamesManager
                     ShowErrorMessageBox(ex.Message);
                     return;
                 }
+
                 LoadGames();
                 LoadAssignments();
             }
