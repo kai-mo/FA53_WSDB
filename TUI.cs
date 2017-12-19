@@ -121,7 +121,16 @@ Choose an option: ");
                 }
             } while (!Int32.TryParse(input, out choice) || choice < 1 || choice > developers.Count);
 
-            businesslayer.AddGame(new_game, developers[choice - 1].Name);
+            try
+            {
+                businesslayer.AddGame(new_game, developers[choice - 1].Name);
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine("\n" + exp.Message);
+                Console.WriteLine("\nPress any key to return to main menu...");
+                Console.ReadKey();
+            }
         }
 
         private void AddDeveloper()
